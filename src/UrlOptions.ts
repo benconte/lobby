@@ -1,12 +1,13 @@
-interface UrlOptions {
+interface Options {
     headers: Object
 }
 
-export const urlOptions: UrlOptions = {
-    headers: {
-      Authorization: `Bearer ${process.env.YELPAPIKEY}`,
-    },
-};
+export const urlParams: RequestInit = {
+  headers: {
+    Authorization: `Bearer ${process.env.YELPAPIKEY}`,
+  },
+  method: "GET",
+}
 
 export const YelpUrl: string =
   'https://api.yelp.com/v3/businesses/search?location=NYC&categories=hotels&open_now=true';

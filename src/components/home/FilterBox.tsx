@@ -4,15 +4,31 @@ import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BorderAllRoundedIcon from '@mui/icons-material/BorderAllRounded';
-import AvTimerRoundedIcon from '@mui/icons-material/AvTimerRounded';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
 
-function FilterBox() {
-    const [filterBy, setFilterBy] = useState("hotels")
+function FilterBox({ setBusinesses }: {setBusinesses: any}) {
+    const [term, setTerm] = useState("")
+    const [category, setCategory] = useState("hotels")
     const [isOpen, setIsOpen] = useState(false)
-    const [status, setStatus] = useState("Open")
+    const [status, setStatus] = useState("open")
     const [searchTypeDrop, setsearchTypeDrop] = useState(false)
+    const [location, setLocation] = useState("NYC")
+    const [limit] = useState(35)
+
+    const fetchData = async () => {
+        setBusinesses([])
+        let url: string
+        if(term.length > 0) {
+            url = `/api/hello?term=${term}&categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
+        } else {
+            url = `/api/hello?categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
+        }
+        
+        const rq = await fetch(url)
+        const data = await rq.json()
+
+        setBusinesses(data.data.businesses)
+    }
 
     return (
         <div className="w-full px-3 md:px-10 block md:flex gap-2 items-start h-auto mb-5">
@@ -32,21 +48,21 @@ function FilterBox() {
                 </header>
                 <div className="block border-t border-solid w-full py-2">
                     <div className='flex items-center gap-2 w-full'>
-                        <input type='search' className="w-full h-10 bg-gray-100 rounded-full px-3 outline-none text-zinc-600" placeholder='Search for a hotel...' />
-                        <button type="button" className="flex items-center justify-center text-white cursor-pointer bg-[var(--lightblue)] rounded-full">
+                        <input type='search' className="w-full h-10 bg-gray-100 rounded-full px-3 outline-none text-zinc-600" placeholder='Search for a hotel...' value={term} onChange={(e) => setTerm(e.target.value)} />
+                        <button type="button" className="flex items-center justify-center text-white cursor-pointer bg-[var(--lightblue)] rounded-full" onClick={fetchData}>
                             <SearchIcon className="text-xl m-2" />
                         </button>
                     </div>
 
 
-                    <div className="flex items-center gap-2 w-full" style={{zIndex: 5}}>
+                    <div className="flex items-center gap-2 w-full" style={{ zIndex: 5 }}>
                         {/* city section */}
                         <div className="flex flex-col justify-center gap-1 mt-3 w-40">
                             <p className="flex items-center gap-1">
                                 <LocationOnIcon className="text-base text-zinc-600" />
                                 <span className="font-medium text-zinc-600">Location</span>
                             </p>
-                            <input type="search" placeholder='Search City...' className="w-full h-9 rounded-full outline-none border-transparent px-3 text-zinc-600 bg-gray-100" />
+                            <input type="search" value={location} onChange={(e) => setLocation(e.target.value)} placeholder='Search City...' className="w-full h-9 rounded-full outline-none border-transparent px-3 text-zinc-600 bg-gray-100" />
                         </div>
 
                         {/* filter by section */}
@@ -57,16 +73,16 @@ function FilterBox() {
                             </p>
                             <div className="flex relative">
                                 <div className="flex items-center h-10 bg-gray-100 px-3 justify-between rounded-full w-40 cursor-pointer" onClick={() => setsearchTypeDrop(!searchTypeDrop)}>
-                                    <span className="font-medium text-zinc-600">{filterBy}</span>
+                                    <span className="font-medium text-zinc-600">{category}</span>
                                     <KeyboardArrowDownIcon className="text-base text-zinc-600" />
                                 </div>
-                                <div className={`${searchTypeDrop ? "flex" : "hidden"} flex-col justify-start gap-2 absolute top-12 rounded w-full bg-white border border-solid border-gray-300`} style={{zIndex: 5}}>
+                                <div className={`${searchTypeDrop ? "flex" : "hidden"} flex-col justify-start gap-2 absolute top-12 rounded w-full bg-white border border-solid border-gray-300`} style={{ zIndex: 5 }}>
                                     <span className='hover:bg-[var(--lightblue)] text-zin-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
-                                        setFilterBy("hotels")
+                                        setCategory("hotels")
                                         setsearchTypeDrop(false)
                                     }}>Hotels</span>
                                     <span className='hover:bg-[var(--lightblue)] text-zin-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
-                                        setFilterBy("restaurants")
+                                        setCategory("restaurants")
                                         setsearchTypeDrop(false)
                                     }}>Restaurants</span>
                                 </div>
@@ -84,7 +100,7 @@ function FilterBox() {
                                     <span>{status}</span>
                                     <KeyboardArrowDownIcon className="text-base text-zinc-600" />
                                 </div>
-                                <div className={`${isOpen ? "flex" : "hidden"} flex-col justify-start gap-2 absolute top-12 rounded w-full bg-white border border-solid border-gray-300`} style={{zIndex: 5}}>
+                                <div className={`${isOpen ? "flex" : "hidden"} flex-col justify-start gap-2 absolute top-12 rounded w-full bg-white border border-solid border-gray-300`} style={{ zIndex: 5 }}>
                                     <span className='hover:bg-[var(--lightblue)] text-zin-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
                                         setStatus("open")
                                         setIsOpen(false)
