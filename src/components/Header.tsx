@@ -6,14 +6,16 @@ import Image from "next/image"
 import profile from "@/assets/profile.jpg"
 import SearchIcon from '@mui/icons-material/Search';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import Link from 'next/link';
 
 function Header() {
-  const [filterOption, setFilterOption] = useState("NYC");
   const [profileDropdown, setProfileDropdown] = useState(false)
   return (
-    <div className="w-full z-10 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-2 md:px-10">
+    <div className="w-full z-10 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-5 md:px-10">
       <div className="h-full flex items-center gap-3 cursor-pointer">
-        <h3 className='text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
+        <Link href="/" className="no-underline">
+          <h3 className='text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
+        </Link>
         <div className='hidden md:block w-[1px] h-5 bg-gray-400 mx-4'></div>
 
         <ul className='hidden md:flex items-center gap-3 m-0 list-none'>
@@ -29,7 +31,7 @@ function Header() {
           <SearchIcon className="text-xl text-gray-600 cursor-pointer mr-4" />
         </div>
 
-        
+
         <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
           <SettingsIcon className="text-2xl m-2" />
         </span>
@@ -38,11 +40,11 @@ function Header() {
         </span>
 
         <div className='w-[1px] h-5 bg-gray-400 hidden md:block md:mx-4'></div>
-        
+
         <div className='relative'>
           <Image src={profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} />
           {/* dropdown */}
-          <div className={`bg-white border border-solid border-gray-300 w-40 ${profileDropdown? "flex top-12": "hidden top-16" } flex-col gap-3 justify-start rounded absolute  right-0`}>
+          <div className={`bg-white border border-solid border-gray-300 w-40 ${profileDropdown ? "flex top-12" : "hidden top-16"} flex-col gap-3 justify-start rounded absolute  right-0`}>
             <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Profile</span>
             <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Settings</span>
             <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Help</span>

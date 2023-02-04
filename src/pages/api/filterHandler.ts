@@ -14,7 +14,7 @@ interface params {
 
 export default async function getData(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<any>
 ) {
 
   const { categories, location, is_closed, limit } = req.query
@@ -25,7 +25,11 @@ export default async function getData(
     url = `https://api.yelp.com/v3/businesses/search?categories=${categories}&location=${location}&is_closed=${is_closed}&limit=${limit}`
   }
 
-  const rq: Response = await fetch(url, urlParams)
-  const data: Response = await rq.json()
-  res.status(200).json({ data: data })
+  try {
+    const rq: Response = await fetch(url, urlParams)
+    const data: Response = await rq.json()
+    res.status(200).json({ data: data })
+  } catch (err: any) {
+    res.status(500).json({ error: "Unable to fetch businesses" })
+  }
 }

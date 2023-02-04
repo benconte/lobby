@@ -19,9 +19,9 @@ function FilterBox({ setBusinesses }: {setBusinesses: any}) {
         setBusinesses([])
         let url: string
         if(term.length > 0) {
-            url = `/api/hello?term=${term}&categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
+            url = `/api/filterHandler?term=${term}&categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
         } else {
-            url = `/api/hello?categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
+            url = `/api/filterHandler?categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
         }
         
         const rq = await fetch(url)

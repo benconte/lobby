@@ -11,5 +11,5 @@ module.exports = {
       "LeckerliOne": "Leckerli One",
     }
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 }
