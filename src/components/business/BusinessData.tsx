@@ -19,7 +19,7 @@ function BusinessData({ business }: { business: any }) {
                 </p>
             </div>
             <p className="text-base text-zinc-600 mt-2"><b>Call us:</b> {business.phone}</p>
-            <p className="text-base text-zinc-600 mt-1"><b>Review Count:</b> {business.review_count}</p>
+            <p className="text-base text-zinc-600 mb-1"><b>Review Count:</b> {business.review_count}</p>
             <p className="text-sm text-gray-400 sm:line-clamp-5 lg:line-clamp-none">Singing Kettle Beach Lodge is the ideal Plettenberg Bay beachfront accommodation. With panoramic sea views overlooking Keurbooms beach; a self-catering lodge perfect for romantic getaways and families. Conveniently situated above the famous Enrico{"'"}s restaurant. Room 1, our Honeymoon room, has a furnished balcony offering views of the Indian Ocean. This more spacious room has a lounge and dining area, flat-screen satellite TV , en-suite bathroom with shower and bath, fireplace and kitchenette.</p>
 
             <p className="text-base text-zinc-600 mt-2">

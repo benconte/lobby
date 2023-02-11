@@ -10,7 +10,7 @@ function Map({ coordinates }: { coordinates: any }) {
     const map: any = useRef(null);
     const [lng, setLng] = useState(coordinates.longitude);
     const [lat, setLat] = useState(coordinates.latitude);
-    const [zoom, setZoom] = useState(16);
+    const [zoom, setZoom] = useState(14);
 
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -33,10 +33,12 @@ function Map({ coordinates }: { coordinates: any }) {
     return (
         <div>
             <h3 className="text-[var(--lightblue)] font-bold text-xl">Business Location</h3>
-            <div className="text-base text-zinc-600 mt-2">
-                Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+            <div ref={mapContainer} className="h-[300px] rounded-lg">
+                <div className="absolute top-2 left-2 p-1 rounded bg-[rgba(0,0,0,.8)] z-10 text-gray-200 text-sm">
+                    Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+                </div>
+
             </div>
-            <div ref={mapContainer} className="h-[300px] rounded-lg" />
         </div>
     )
 }

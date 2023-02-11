@@ -14,17 +14,19 @@ function ImgSlider({ images }: { images: any }) {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings} className="w-full md:w-3/6 custom-buttons">
-      {images.map((img: any, index: number) => (
-        <div key={index} className="relative w-full h-64 md:h-96 rounded-lg object-cover overflow-hidden">
-          <Image src={img} alt="some radom img" fill={true} loading="eager" className="object-cover" />
-          <div className="absolute top-3 right-3 flex items-center justify-center text-[var(--dark)] hover:text-[var(--lightblue)] cursor-pointer bg-gray-100 rounded-full">
-            <BookmarkBorderIcon className="text-xl m-1" />
+    <div className='w-full md:w-3/6 relative'>
+      <div className="absolute top-3 right-3 flex items-center justify-center text-[var(--dark)] hover:text-[var(--lightblue)] cursor-pointer bg-gray-100 rounded-full z-10">
+        <BookmarkBorderIcon className="text-xl m-1" />
+      </div>
+      <Slider {...settings} className="w-full custom-buttons">
+        {images.map((img: any, index: number) => (
+          <div key={index} className="relative w-full h-64 md:h-96 rounded-lg object-cover overflow-hidden">
+            <Image src={img} alt="some radom img" fill={true} loading="eager" className="object-cover" />
           </div>
-        </div>
-      ))}
+        ))}
 
-    </Slider>
+      </Slider>
+    </div>
   )
 }
 
