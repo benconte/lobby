@@ -29,9 +29,11 @@ function Business({ business }: businessProp) {
           <BusinessData business={business} />
         </div>
         <Amenities />
-        <div className='w-full grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 gap-4'>
+        <div className={`w-full grid grid-flow-row-dense grid-cols-1 ${business.hours && "md:grid-cols-2"} gap-4`}>
           <Map coordinates={business.coordinates} />
-          <Time hours={business.hours} />
+          {business.hours && 
+            <Time hours={business.hours} />
+          }
         </div>
       </div>
     </div>
@@ -46,6 +48,8 @@ export const getServerSideProps = async (context: any) => {
 
   const rqst = await fetch(`https://api.yelp.com/v3/businesses/${id}`, urlParams)
   const data = await rqst.json()
+
+  console.log(data)
 
   return {
     props: {

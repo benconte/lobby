@@ -34,7 +34,9 @@ function BusinessData({ business }: { business: any }) {
                         <span className="text-sm py-1 px-2 rounded flex items-center justify-center text-zinc-600 bg-gray-200">Family</span>
                     </div>
                 </div>
-                <span className={`${business.hours[0].is_open_now ? "bg-green-600" : "bg-red-600"} rounded px-3 text-sm py-1 text-white`}>{business.hours[0].is_open_now ? "Open" : "Closed"}</span>
+                {business.hours && 
+                    <span className={`${business.hours[0].is_open_now ? "bg-green-600" : "bg-red-600"} rounded px-3 text-sm py-1 text-white`}>{business.hours[0].is_open_now ? "Open" : "Closed"}</span>
+                }
             </div>
             <button className="text-base text-white bg-[var(--lightblue)] outline-none rounded-full font-medium p-2 mt-2 hover:bg-[var(--dark)]" type="button">Book Now</button>
         </div>
