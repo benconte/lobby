@@ -1,26 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState, FormEventHandler } from 'react'
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import download from "@/assets/download.png"
 import download2 from "@/assets/download-removebg.png"
 import Image from "next/image"
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import ToggleOnIcon from '@mui/icons-material/ToggleOn';
-import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import google_svg from "@/assets/google-svg.png"
 import Link from "next/link"
-import { json } from 'stream/consumers';
 
 const loginAnimation = require("@/assets/lottiefiles/secure-login.json")
 
-function Login() {
-  const [emailAnimated, setisEmailAnimated] = useState<boolean>(false)
+function Register() {
+  const [usernameAnimated, setisUsernameAnimated] = useState<boolean>(false)
+  const [usernameLabel, setisUsernameLabel] = useState<boolean>(false)
+
   const [emailLabel, setisEmailLabel] = useState<boolean>(false)
+  const [emailAnimated, setisEmailAnimated] = useState<boolean>(false)
+
   const [passwordLabel, setisPasswordLabel] = useState<boolean>(false)
   const [passwordAnimated, setisPasswordAnimated] = useState<boolean>(false)
+
+  const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [checkmark, setCheckmark] = useState(false)
+  const [error, setError] = useState<string>("")
+  const [success, setSuccess] = useState<string>("")
+
+  const animateUsername = () => {
+    if (usernameAnimated) { // it is turned on so turn it off
+      if (username.length > 0) {
+        setisUsernameLabel(true)
+      } else {
+        setisUsernameLabel(false)
+      }
+      setisUsernameAnimated(false)
+    } else { // it is closed so turn it on
+      setisUsernameAnimated(true)
+      setisUsernameLabel(true)
+    }
+  }
 
   const animateEmail = () => {
     if (emailAnimated) { // it is turned on so turn it off
@@ -50,18 +70,32 @@ function Login() {
     }
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit:FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
-    fetch("/api/auth/session", {
+    fetch("/api/auth/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: "admin@gmail.com",
-        password: "localhost"
+        username, email, password
       })
-    }).then(res => res.json()).then(data => console.log(data))
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        if(data.success) {
+          setError("")
+          setSuccess("Account created sucessfully!")
+        }
+        else {
+          setError(data.message)
+        }
+      })
+      .catch(err => {
+        setError(err)
+        throw new Error(err)
+      })
   }
   return (
     <div className="w-screen min-h-screen bg-gray-100 py-6 md:py-10 px-5 md:px-28">
@@ -100,13 +134,31 @@ function Login() {
               <header className='flex flex-col justify-center items-center gap-3'>
                 {/* logo */}
                 <h1 className='text-3xl text-[#375DC2] font-bold font-LeckerliOne'>Lobby</h1>
-                <h3 className="font-bold text-xl text-zinc-600">Hello Again!</h3>
+                <h3 className="font-bold text-xl text-zinc-600">Welcome!</h3>
                 <legend className="text-sm text-gray-400 text-center leading-5">
                   Lobby is the best tool for finding hotels and restaurants near you, we have about 10000 different business around the world.
                   {/* Whether you are travelling on business or pleasure, we know you have a variety of hotels to choose from. We strive to provide you with a room that is clean and comfortable, with friendly attentive service at a value-conscious price */}
                 </legend>
               </header>
               <div className="w-full flex flex-col justify-start gap-3 mb-2 mt-10">
+
+                {/* messages */}
+                {success.length > 0 && 
+                  <p className={`w-full h-9 rounded border-2 border-solid border-gren-300 bg-green-600 text-white text-base flex items-center justify-center font-medium mb-4`}>{success}</p>
+                }
+
+                {error.length > 0 && 
+                  <p className={`w-full h-9 rounded border-2 border-solid border-red-300 bg-red-500 text-white  text-base flex items-center justify-center font-medium mb-4`}>{error}</p>
+                }
+
+                <div className='w-full relative p-0 m-0'>
+                  <label className={`absolute duration-200 ${usernameLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"}  font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="username">Username</label>
+                  <div className={`flex items-center  border border-solid ${usernameAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
+                    <input id="username" name="username" type="text" className="bg-transparent text-base border-none outline-none text-zinc-600 flex-1 h-9 px-3" autoComplete='off' onFocus={animateUsername} onBlur={animateUsername} onChange={(e) => setUsername(e.target.value)} />
+                    <PersonOutlineOutlinedIcon className={`text-lg ${usernameAnimated ? "text-[#375DC2]" : "text-zinc-500 "} cursor-pointer mx-2`} onClick={animateUsername} />
+                  </div>
+                </div>
+
                 <div className='w-full relative p-0 m-0'>
                   <label className={`absolute duration-200 ${emailLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"}  font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="email">Email</label>
                   <div className={`flex items-center  border border-solid ${emailAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
@@ -114,34 +166,24 @@ function Login() {
                     <AlternateEmailIcon className={`text-lg ${emailAnimated ? "text-[#375DC2]" : "text-zinc-500 "} cursor-pointer mx-2`} onClick={animateEmail} />
                   </div>
                 </div>
+
                 <div className='w-full relative p-0 m-0'>
-                  <label className={`absolute duration-200 ${passwordLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"} font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} onClick={() => { }} htmlFor="password">password</label>
+                  <label className={`absolute duration-200 ${passwordLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"} font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="password">password</label>
                   <div className={`flex items-center  border border-solid ${passwordAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
                     <input type="password" id="password" name="password" className="bg-transparent text-base border-none outline-none text-zinc-600 flex-1 h-9 px-3" autoComplete='off' onFocus={animatePassword} onBlur={animatePassword} onChange={(e) => setPassword(e.target.value)} />
                     <LockOutlinedIcon className={`text-lg ${passwordAnimated ? "text-[#375DC2]" : "text-zinc-500 "} cursor-pointer mx-2`} onClick={animatePassword} />
                   </div>
                 </div>
               </div>
-              <div className='flex items-center justify-between'>
-                <div className="flex items-center gap-1">
-                  {checkmark ?
-                    <ToggleOnIcon id="checkbox" className="text-2xl text-[#375DC2] cursor-pointer" onClick={() => setCheckmark(!checkmark)} />
-                    :
-                    <ToggleOffOutlinedIcon id="checkbox" className="text-2xl text-gray-400 cursor-pointer" onClick={() => setCheckmark(!checkmark)} />
-                  }
-                  <label onClick={() => setCheckmark(!checkmark)} className='text-sm text-gray-400 cursor-pointer'>Remeber me</label>
-                </div>
-                <Link href="#" className='text-sm text-[#375DC2] hover:underline'>Recover Password</Link>
-              </div>
-              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>Login</button>
+              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>Singup</button>
               <button type="button" className='mb-4 w-full h-10 text-zinc-500 border border-solid border-gray-300 rounded-md bg-white flex items-center gap-3 justify-center outline-none'>
                 <Image src={google_svg} alt="nona" width={20} height={20} />
                 Sign in with google
               </button>
 
               <p className='w-full flex items-center text-sm text-gray-400 justify-center mt-4 gap-2 text-center'>
-                <span>Don{`'`}t have an account? </span>
-                <Link href="register" className="text-[#375DC2]">Register</Link>
+                <span>Already have an account? </span>
+                <Link href="signin" className="text-[#375DC2]">Signin</Link>
               </p>
             </fieldset>
           </div>
@@ -151,4 +193,12 @@ function Login() {
   )
 }
 
-export default Login
+export default Register
+
+export const getServerSideProps = ({ req, res }: {req: any; res: any}) => {
+  console.log(req.session)
+
+  return{
+    props: {}
+  }
+}

@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
+import React, { FormEventHandler, useState } from 'react'
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
-import download from "@/assets/download.png"
-import download2 from "@/assets/download-removebg.png"
 import Image from "next/image"
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -9,7 +7,8 @@ import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
 import google_svg from "@/assets/google-svg.png"
 import Link from "next/link"
-import { json } from 'stream/consumers';
+import { signIn } from "next-auth/react"
+import Router from "next/router"
 
 const loginAnimation = require("@/assets/lottiefiles/secure-login.json")
 
@@ -20,6 +19,7 @@ function Login() {
   const [passwordAnimated, setisPasswordAnimated] = useState<boolean>(false)
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
+  const [error, setError] = useState<string>("")
   const [checkmark, setCheckmark] = useState(false)
 
   const animateEmail = () => {
@@ -50,18 +50,26 @@ function Login() {
     }
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit:FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
-    fetch("/api/auth/session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "admin@gmail.com",
-        password: "localhost"
+    // handle sign in
+
+
+      const res = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false
       })
-    }).then(res => res.json()).then(data => console.log(data))
+      console.log(res)
+      if(res?.ok){
+        // redirect if user was authenticated
+        setError("")
+        Router.replace("/")
+      } else {
+        // handle error from here
+        setError("Invalid Email and Password. Check your data and try again!")
+      }
+    
   }
   return (
     <div className="w-screen min-h-screen bg-gray-100 py-6 md:py-10 px-5 md:px-28">
@@ -107,6 +115,12 @@ function Login() {
                 </legend>
               </header>
               <div className="w-full flex flex-col justify-start gap-3 mb-2 mt-10">
+
+                {/* messages */}
+                {error.length > 0 && 
+                  <p className={`w-full rounded border-2 border-solid border-red-300 bg-red-500 text-white text-sm flex items-center justify-center font-medium mb-4 text-center p-2`}>{error}</p>
+                }
+
                 <div className='w-full relative p-0 m-0'>
                   <label className={`absolute duration-200 ${emailLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"}  font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="email">Email</label>
                   <div className={`flex items-center  border border-solid ${emailAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
@@ -133,7 +147,7 @@ function Login() {
                 </div>
                 <Link href="#" className='text-sm text-[#375DC2] hover:underline'>Recover Password</Link>
               </div>
-              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>Login</button>
+              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>Signin</button>
               <button type="button" className='mb-4 w-full h-10 text-zinc-500 border border-solid border-gray-300 rounded-md bg-white flex items-center gap-3 justify-center outline-none'>
                 <Image src={google_svg} alt="nona" width={20} height={20} />
                 Sign in with google
@@ -141,7 +155,7 @@ function Login() {
 
               <p className='w-full flex items-center text-sm text-gray-400 justify-center mt-4 gap-2 text-center'>
                 <span>Don{`'`}t have an account? </span>
-                <Link href="register" className="text-[#375DC2]">Register</Link>
+                <Link href="signup" className="text-[#375DC2]">SignUp</Link>
               </p>
             </fieldset>
           </div>

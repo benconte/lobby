@@ -5,21 +5,43 @@ import download2 from "@/assets/download-removebg.png"
 import Image from "next/image"
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import ToggleOnIcon from '@mui/icons-material/ToggleOn';
-import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import google_svg from "@/assets/google-svg.png"
 import Link from "next/link"
+import Router from "next/router"
 
 const loginAnimation = require("@/assets/lottiefiles/secure-login.json")
 
 function Register() {
-  const [emailAnimated, setisEmailAnimated] = useState<boolean>(false)
+  const [usernameAnimated, setisUsernameAnimated] = useState<boolean>(false)
+  const [usernameLabel, setisUsernameLabel] = useState<boolean>(false)
+
   const [emailLabel, setisEmailLabel] = useState<boolean>(false)
+  const [emailAnimated, setisEmailAnimated] = useState<boolean>(false)
+
   const [passwordLabel, setisPasswordLabel] = useState<boolean>(false)
   const [passwordAnimated, setisPasswordAnimated] = useState<boolean>(false)
+
+  const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [checkmark, setCheckmark] = useState(false)
+  const [error, setError] = useState<string>("")
+  const [success, setSuccess] = useState<string>("")
+
+  const animateUsername = () => {
+    if (usernameAnimated) { // it is turned on so turn it off
+      if (username.length > 0) {
+        setisUsernameLabel(true)
+      } else {
+        setisUsernameLabel(false)
+      }
+      setisUsernameAnimated(false)
+    } else { // it is closed so turn it on
+      setisUsernameAnimated(true)
+      setisUsernameLabel(true)
+    }
+  }
 
   const animateEmail = () => {
     if (emailAnimated) { // it is turned on so turn it off
@@ -47,6 +69,37 @@ function Register() {
       setisPasswordAnimated(true)
       setisPasswordLabel(true)
     }
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    fetch("/api/auth/session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        email: email,
+        password: password,
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        if(data.success) {
+          setError("")
+          setSuccess("Account created sucessfully!")
+          Router.replace("/auth/signin")
+        }
+        else {
+          setError(data.message)
+        }
+      })
+      .catch(err => {
+        setError(err)
+        throw new Error(err)
+      })
   }
   return (
     <div className="w-screen min-h-screen bg-gray-100 py-6 md:py-10 px-5 md:px-28">
@@ -79,7 +132,7 @@ function Register() {
             </footer>
           </div>
         </div>
-        <form autoComplete='off'>
+        <form autoComplete='off' onSubmit={handleSubmit}>
           <div className='flex-1 bg-white p-10 h-auto flex flex-col items-center justify-center'>
             <fieldset className='w-80'>
               <header className='flex flex-col justify-center items-center gap-3'>
@@ -92,6 +145,24 @@ function Register() {
                 </legend>
               </header>
               <div className="w-full flex flex-col justify-start gap-3 mb-2 mt-10">
+
+                {/* messages */}
+                {success.length > 0 && 
+                  <p className={`w-full h-9 rounded border-2 border-solid border-gren-300 bg-green-600 text-white text-base flex items-center justify-center font-medium mb-4`}>{success}</p>
+                }
+
+                {error.length > 0 && 
+                  <p className={`w-full h-9 rounded border-2 border-solid border-red-300 bg-red-500 text-white  text-base flex items-center justify-center font-medium mb-4`}>{error}</p>
+                }
+
+                <div className='w-full relative p-0 m-0'>
+                  <label className={`absolute duration-200 ${usernameLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"}  font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="username">Username</label>
+                  <div className={`flex items-center  border border-solid ${usernameAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
+                    <input id="username" name="username" type="text" className="bg-transparent text-base border-none outline-none text-zinc-600 flex-1 h-9 px-3" autoComplete='off' onFocus={animateUsername} onBlur={animateUsername} onChange={(e) => setUsername(e.target.value)} />
+                    <PersonOutlineOutlinedIcon className={`text-lg ${usernameAnimated ? "text-[#375DC2]" : "text-zinc-500 "} cursor-pointer mx-2`} onClick={animateUsername} />
+                  </div>
+                </div>
+
                 <div className='w-full relative p-0 m-0'>
                   <label className={`absolute duration-200 ${emailLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"}  font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="email">Email</label>
                   <div className={`flex items-center  border border-solid ${emailAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
@@ -99,6 +170,7 @@ function Register() {
                     <AlternateEmailIcon className={`text-lg ${emailAnimated ? "text-[#375DC2]" : "text-zinc-500 "} cursor-pointer mx-2`} onClick={animateEmail} />
                   </div>
                 </div>
+
                 <div className='w-full relative p-0 m-0'>
                   <label className={`absolute duration-200 ${passwordLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"} font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="password">password</label>
                   <div className={`flex items-center  border border-solid ${passwordAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
@@ -126,3 +198,11 @@ function Register() {
 }
 
 export default Register
+
+export const getServerSideProps = ({ req, res }: {req: any; res: any}) => {
+  console.log(req.session)
+
+  return{
+    props: {}
+  }
+}
