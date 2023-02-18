@@ -8,15 +8,25 @@ import SearchIcon from '@mui/icons-material/Search';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Link from 'next/link';
 import { useRouter } from "next/router"
+import { useSession, signOut } from 'next-auth/react';
 
 function Header() {
   const [profileDropdown, setProfileDropdown] = useState(false)
   const [isSearchVisible, setisSearchVisible] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const router = useRouter()
 
+  const { status } = useSession()
+
   useEffect(() => {
+    if(status === "authenticated") {
+      setIsAuthenticated(true)
+    } else {
+      setIsAuthenticated(false)
+    }
+
     if (router.pathname !== "/") setisSearchVisible(true)
-  }, [router.pathname])
+  }, [router.pathname, status])
   return (
     <div className="w-full z-20 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-5 lg:px-10">
       <div className="h-full flex items-center gap-3 cursor-pointer">
@@ -49,6 +59,7 @@ function Header() {
 
         <div className='w-[1px] h-5 bg-gray-400 hidden md:block mx-1 lg:mx-4'></div>
 
+        {isAuthenticated? 
         <div className='relative'>
           <Image src={profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} />
           {/* dropdown */}
@@ -56,9 +67,16 @@ function Header() {
             <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Profile</span>
             <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Settings</span>
             <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Help</span>
-            <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Logout</span>
+            <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white' onClick={() => signOut()}>Logout</span>
           </div>
         </div>
+        : 
+          <div>
+            <Link href="/auth/signin" className='no-underline text-white text-sm font-medium p-2 rounded bg-[var(--lightblue)]'>
+              SignIn
+            </Link>
+          </div>
+        }
       </div>
     </div>
   )

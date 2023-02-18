@@ -14,10 +14,10 @@ const authOptions: NextAuthOptions = {
         CredentialsProvider({
             type: "credentials",
             credentials: {} as any,
+            authorize: async (credentials) => {
+                //whenever we send a sign in request to backend this authorize will fire
+                // the credentials will contain all the data comning from our frontend to authorize the user
 
-            //whenever we send a sign in request to backend this authorize will fire
-            // the credentials will contain all the data comning from our frontend to authorize the user
-            async authorize(credentials) {
                 const { email, password } = credentials as { email: string; password: string } 
 
                 // first validate email
@@ -36,7 +36,6 @@ const authOptions: NextAuthOptions = {
                     const user = await users.findOne({ email });
                     if(user) {
                         const match = await compare(password, user.password)
-                        console.log(match)
                         
                         if (match) {
                             return { id: user?._id, name: user?.username }

@@ -1,14 +1,13 @@
-import React, { useState, FormEventHandler } from 'react'
+import { useState, FormEventHandler, useEffect } from 'react'
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
-import download from "@/assets/download.png"
-import download2 from "@/assets/download-removebg.png"
 import Image from "next/image"
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import google_svg from "@/assets/google-svg.png"
 import Link from "next/link"
+import Router,{ useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 
 const loginAnimation = require("@/assets/lottiefiles/secure-login.json")
 
@@ -27,6 +26,10 @@ function Register() {
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<string>("")
   const [success, setSuccess] = useState<string>("")
+
+  const router = useRouter()
+  const { status} = useSession()
+
 
   const animateUsername = () => {
     if (usernameAnimated) { // it is turned on so turn it off
@@ -87,6 +90,7 @@ function Register() {
         if(data.success) {
           setError("")
           setSuccess("Account created sucessfully!")
+          router.push("/")
         }
         else {
           setError(data.message)
@@ -97,6 +101,10 @@ function Register() {
         throw new Error(err)
       })
   }
+
+  useEffect(() => {
+    if (status === "authenticated") Router.replace("/");
+  }, [status])
   return (
     <div className="w-screen min-h-screen bg-gray-100 py-6 md:py-10 px-5 md:px-28">
       <div className="flex items-start justify-center w-full h-full bg-white rounded-lg overflow-hidden">
@@ -194,11 +202,3 @@ function Register() {
 }
 
 export default Register
-
-export const getServerSideProps = ({ req, res }: {req: any; res: any}) => {
-  console.log(req.session)
-
-  return{
-    props: {}
-  }
-}

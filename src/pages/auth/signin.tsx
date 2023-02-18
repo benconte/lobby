@@ -1,4 +1,4 @@
-import React, { FormEventHandler, useState } from 'react'
+import { FormEventHandler, useState, useEffect } from 'react'
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import Image from "next/image"
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
@@ -8,7 +8,8 @@ import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
 import google_svg from "@/assets/google-svg.png"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
-import Router from "next/router"
+import Router, { useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 
 const loginAnimation = require("@/assets/lottiefiles/secure-login.json")
 
@@ -21,6 +22,9 @@ function Login() {
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<string>("")
   const [checkmark, setCheckmark] = useState(false)
+
+  const router = useRouter()
+  const { status } = useSession()
 
   const animateEmail = () => {
     if (emailAnimated) { // it is turned on so turn it off
@@ -50,27 +54,29 @@ function Login() {
     }
   }
 
-  const handleSubmit:FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
+
     // handle sign in
-
-
-      const res = await signIn("credentials", {
-        email: email,
-        password: password,
-        redirect: false
-      })
-      console.log(res)
-      if(res?.ok){
-        // redirect if user was authenticated
-        setError("")
-        Router.replace("/")
-      } else {
-        // handle error from here
-        setError("Invalid Email and Password. Check your data and try again!")
-      }
-    
+    const res = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false
+    })
+    console.log(res)
+    if (res?.ok) {
+      // redirect if user was authenticated
+      setError("")
+      router.push("/")
+    } else {
+      // handle error from here
+      setError("Invalid Email and Password. Check your data and try again!")
+    }
   }
+
+  useEffect(() => {
+    if (status === "authenticated") Router.replace("/");
+  }, [status])
   return (
     <div className="w-screen min-h-screen bg-gray-100 py-6 md:py-10 px-5 md:px-28">
       <div className="flex items-start justify-center w-full h-full bg-white rounded-lg overflow-hidden">
@@ -117,7 +123,7 @@ function Login() {
               <div className="w-full flex flex-col justify-start gap-3 mb-2 mt-10">
 
                 {/* messages */}
-                {error.length > 0 && 
+                {error.length > 0 &&
                   <p className={`w-full rounded border-2 border-solid border-red-300 bg-red-500 text-white text-sm flex items-center justify-center font-medium mb-4 text-center p-2`}>{error}</p>
                 }
 
