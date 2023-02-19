@@ -1,5 +1,5 @@
 import React from 'react'
-import { urlParams } from "@/UrlOptions"
+import { urlParams } from "@/utils/UrlOptions"
 import ImgSlider from "@/components/business/ImgSlider"
 import BusinessData from "@/components/business/BusinessData"
 import Amenities from "@/components/business/Amenities"
@@ -16,14 +16,14 @@ function Business({ business }: businessProp) {
   return (
     <div className='w-full pt-20'>
       <Head>
-        <title>Lobby - Home</title>
+        <title>Lobby - Business</title>
         <meta name="description" content="A Hotel seaching and booking ap" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
 
-      <div className="w-full px-3 md:px-10 marker:min-h-screen py-7 bg-gray-100 h-auto overflow-hidden">
+      <div className="w-full px-3 md:px-10 md:min-h-screen py-7 bg-gray-100 h-auto overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start justify-start gap-3">
           <ImgSlider images={business?.photos} />
           <BusinessData business={business} />
@@ -48,23 +48,9 @@ export const getServerSideProps = async (context: any) => {
 
   const rqst = await fetch(`https://api.yelp.com/v3/businesses/${id}`, urlParams)
   const data = await rqst.json()
-
-  console.log(data)
-
   return {
     props: {
       business: data
     }
   }
 }
-
-// images
-// name + rating(must be pushed to the side with flex)
-// categories
-// telephone
-// review count
-// some words in dumyData
-// amenities
-// booking form. should be displayed flex with the name and other stuff
-// map
-// open hours table

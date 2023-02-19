@@ -1,3 +1,0 @@
-// Singing Kettle Beach Lodge is the ideal Plettenberg Bay beachfront accommodation. With panoramic sea views overlooking Keurbooms beach; a self-catering lodge perfect for romantic getaways and families. Conveniently situated above the famous Enrico's restaurant. Room 1, our Honeymoon room, has a furnished balcony offering views of the Indian Ocean. This more spacious room has a lounge and dining area, flat-screen satellite TV , en-suite bathroom with shower and bath, fireplace and kitchenette.
-
-export {}

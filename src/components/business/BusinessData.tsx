@@ -1,5 +1,6 @@
 import React from 'react'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import Link from "next/link"
 
 function BusinessData({ business }: { business: any }) {
     return (
@@ -23,7 +24,7 @@ function BusinessData({ business }: { business: any }) {
             <p className="text-sm text-gray-400 sm:line-clamp-5 lg:line-clamp-none">Singing Kettle Beach Lodge is the ideal Plettenberg Bay beachfront accommodation. With panoramic sea views overlooking Keurbooms beach; a self-catering lodge perfect for romantic getaways and families. Conveniently situated above the famous Enrico{"'"}s restaurant. Room 1, our Honeymoon room, has a furnished balcony offering views of the Indian Ocean. This more spacious room has a lounge and dining area, flat-screen satellite TV , en-suite bathroom with shower and bath, fireplace and kitchenette.</p>
 
             <p className="text-base text-zinc-600 mt-2">
-                <b>Cost per night:</b> $256
+                <b>Cost:</b> $256
             </p>
             <div className="flex items-center justify-between gap-2 mt-2">
                 <div className="flex items-center gap-2">
@@ -38,7 +39,7 @@ function BusinessData({ business }: { business: any }) {
                     <span className={`${business.hours[0].is_open_now ? "bg-green-600" : "bg-red-600"} rounded px-3 text-sm py-1 text-white`}>{business.hours[0].is_open_now ? "Open" : "Closed"}</span>
                 }
             </div>
-            <button className="text-base text-white bg-[var(--lightblue)] outline-none rounded-full font-medium p-2 mt-2 hover:bg-[var(--dark)]" type="button">Book Now</button>
+            <Link href={`/booking/${business.id}`} className="text-base text-white bg-[var(--lightblue)] no-underline rounded-full font-medium p-2 mt-2 hover:bg-[var(--dark)] text-center">Book Now</Link>
         </div>
     )
 }

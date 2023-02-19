@@ -2,7 +2,7 @@ import { useState } from "react"
 import FilterBox from '@/components/home/FilterBox'
 import Hotels from '@/components/home/Hotels'
 import Head from 'next/head'
-import { urlParams } from "@/UrlOptions"
+import { urlParams } from "@/utils/UrlOptions"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import Header from "@/components/Header"
 

@@ -9,6 +9,9 @@
     --lightblue: #00CCBB;
     --bluelight: rgba(0, 204, 187,.8);
     --dark: #0F172A;
+    --blue: #4B2AF4;
+    --green: #1BB274;
+    --dark-blue: #1E2567;
 }
 
 @import 'tailwindcss/base';
