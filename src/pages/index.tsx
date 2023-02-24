@@ -29,7 +29,7 @@ export default function Home({ data }: {data: any}) {
         <FilterBox setBusinesses={setBusinesses} />
         <div className='w-full px-3 md:px-10 bg-gray-100 py-3 grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
           {businesses.length > 0 ? businesses.map((business:any, index:number) => (
-            <Hotels data={business} key={index} />
+            <Hotels business={business} key={index} />
           )) : (
             <div className="w-screen max-h-72 flex flex-row items-center justify-center ">
               <Player
@@ -49,8 +49,8 @@ export default function Home({ data }: {data: any}) {
 }
 
 export const getServerSideProps = async (context: any) => {
-  const rqst = await fetch("https://api.yelp.com/v3/businesses/search?location=NYC&categories=hotels&open_now=true", urlParams)
-  const data = await rqst.json()
+  const request = await fetch("https://api.yelp.com/v3/businesses/search?location=NYC&categories=hotels&open_now=true", urlParams)
+  const data = await request.json()
   return {
     props: {
       data: data.businesses

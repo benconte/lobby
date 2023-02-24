@@ -6,6 +6,7 @@ import Image from "next/image"
 import profile from "@/assets/profile.jpg"
 import SearchIcon from '@mui/icons-material/Search';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Link from 'next/link';
 import { useRouter } from "next/router"
 import { useSession, signOut } from 'next-auth/react';
@@ -42,7 +43,7 @@ function Header() {
           <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>About Us</li>
         </ul>
       </div>
-      <div className='flex items-center gap-1 lg:gap-3 '>
+      <div className='flex items-center gap-1 lg:gap-3'>
         {isSearchVisible &&
           <div className='h-10 hidden md:flex items-center bg-gray-100 rounded-full'>
             <input type="search" placeholder='Search for a hotel...' className='w-48 h-full outline-none px-4 bg-transparent border-0 text-gray-700' />
@@ -56,8 +57,6 @@ function Header() {
         <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
           <BookmarkBorderIcon className="text-2xl m-2" />
         </span>
-
-        <div className='w-[1px] h-5 bg-gray-400 hidden md:block mx-1 lg:mx-4'></div>
 
         {isAuthenticated? 
         <div className='relative'>

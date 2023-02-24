@@ -15,7 +15,7 @@ const Protected: NextPage = (): JSX.Element => {
     if (status == "authenticated") {
 
         return (
-            <div>the current authenticated user: {session?.user?.name}</div>
+            <div>the current authenticated user: {session?.user?.email}</div>
         )
     }
 
