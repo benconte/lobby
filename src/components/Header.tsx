@@ -50,9 +50,9 @@ function Header() {
           </div>
         }
 
-        <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
+        {/* <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
           <SettingsIcon className="text-2xl m-2" />
-        </span>
+        </span> */}
         <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
           <BookmarkBorderIcon className="text-2xl m-2" />
         </span>

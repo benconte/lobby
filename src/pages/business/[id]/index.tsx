@@ -25,7 +25,7 @@ function Business({ business }: businessProp) {
 
       <div className="w-full px-3 md:px-10 md:min-h-screen py-7 bg-gray-100 h-auto overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start justify-start gap-3">
-          <ImgSlider images={business?.photos} />
+          <ImgSlider images={business?.photos} business={business} />
           <BusinessData business={business} />
         </div>
         <Amenities />

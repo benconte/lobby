@@ -1,10 +1,9 @@
+// @ts-nocheck
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import bcrypt, { compare, hash } from 'bcrypt'
-import { MongoClient, Db } from 'mongodb';
+import { compare } from 'bcrypt'
+import { MongoClient } from 'mongodb';
 import validator from 'validator';
-
-const saltRounds = 10;
 
 const authOptions: NextAuthOptions = {
     session: {
@@ -14,7 +13,7 @@ const authOptions: NextAuthOptions = {
         CredentialsProvider({
             type: "credentials",
             credentials: {} as any,
-            authorize: async (credentials) => {
+            authorize: async (credentials:any) => {
                 //whenever we send a sign in request to backend this authorize will fire
                 // the credentials will contain all the data comning from our frontend to authorize the user
 
