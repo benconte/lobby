@@ -46,8 +46,13 @@ export const getServerSideProps = async (context: any) => {
   const { params } = context;
   const id = params.id // getting the business id from the context params
 
-  const rqst = await fetch(`https://api.yelp.com/v3/businesses/${id}`, urlParams)
-  const data = await rqst.json()
+  const request = await fetch(`https://api.yelp.com/v3/businesses/${id}`, urlParams)
+  const data = await request.json()
+
+  // get reviews also
+  const reviewRequest = await fetch(`https://api.yelp.com/v3/businesses/${id}/reviews?limit=20&sort_by=yelp_sort`, urlParams)
+  const reviews = await reviewRequest.json();
+  data["reviews_data"] = reviews;
   return {
     props: {
       business: data

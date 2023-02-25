@@ -20,7 +20,7 @@ function Header() {
   const { status } = useSession()
 
   useEffect(() => {
-    if(status === "authenticated") {
+    if (status === "authenticated") {
       setIsAuthenticated(true)
     } else {
       setIsAuthenticated(false)
@@ -54,22 +54,23 @@ function Header() {
         {/* <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
           <SettingsIcon className="text-2xl m-2" />
         </span> */}
-        <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
-          <BookmarkBorderIcon className="text-2xl m-2" />
-        </span>
-
-        {isAuthenticated? 
-        <div className='relative'>
-          <Image src={profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} />
-          {/* dropdown */}
-          <div className={`bg-white border border-solid border-gray-300 w-40 ${profileDropdown ? "flex top-12" : "hidden top-16"} flex-col gap-3 justify-start rounded absolute  right-0`}>
-            <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Profile</span>
-            <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Settings</span>
-            <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Help</span>
-            <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white' onClick={() => signOut()}>Logout</span>
+        <Link href="/favorites" className="no-underline">
+          <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
+            <BookmarkBorderIcon className="text-2xl m-2" />
+          </span>
+        </Link>
+        {isAuthenticated ?
+          <div className='relative'>
+            <Image src={profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} />
+            {/* dropdown */}
+            <div className={`bg-white border border-solid border-gray-300 w-40 ${profileDropdown ? "flex top-12" : "hidden top-16"} flex-col gap-3 justify-start rounded absolute  right-0`}>
+              <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Profile</span>
+              <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Settings</span>
+              <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Help</span>
+              <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white' onClick={() => signOut()}>Logout</span>
+            </div>
           </div>
-        </div>
-        : 
+          :
           <div>
             <Link href="/auth/signin" className='no-underline text-white text-sm font-medium p-2 rounded bg-[var(--lightblue)]'>
               SignIn
