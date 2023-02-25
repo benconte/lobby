@@ -25,7 +25,7 @@ const authOptions: NextAuthOptions = {
                 }
                 
                 // find users in database
-                const client = new MongoClient(process.env.MONGODBURI as string)
+                const client = new MongoClient(process.env.MONGODB_URI as string)
 
                 try {
                     await client.connect()

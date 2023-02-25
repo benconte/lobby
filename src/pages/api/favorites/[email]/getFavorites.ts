@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { urlParams } from '@/utils/UrlOptions';
 
 async function GetFavorites(req: NextApiRequest, res: NextApiResponse) {
-    const client = new MongoClient(process.env.MONGODBURI as string)
+    const client = new MongoClient(process.env.MONGODB_URI as string)
 
     const { email } = req.query
     try {

@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 async function checkFavorites(req: NextApiRequest, res: NextApiResponse) {
 
-    const client = new MongoClient(process.env.MONGODBURI as string)
+    const client = new MongoClient(process.env.MONGODB_URI as string)
 
     const { usrEmail: email, business: hotel } = req.body
     try {

@@ -7,7 +7,7 @@ const saltRounds = 10;
 
 async function CreateUser(req: NextApiRequest, res: NextApiResponse) {
     const salt = await bcrypt.genSalt(saltRounds);
-    const client = new MongoClient(process.env.MONGODBURI as string)
+    const client = new MongoClient(process.env.MONGODB_URI as string)
 
     const { username, email, password } = req.body
     const hashedPassword = await bcrypt.hash(password, salt)
