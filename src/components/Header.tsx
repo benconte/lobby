@@ -38,7 +38,9 @@ function Header() {
 
         <ul className='hidden md:flex items-center gap-3 m-0 list-none'>
           {/* <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Categories</li> */}
-          <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Discover</li>
+          <Link href="/discover" className="no-underline">
+            <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Discover</li>
+          </Link>
           <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Rooms</li>
           <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>About Us</li>
         </ul>
