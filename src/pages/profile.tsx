@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useSession, signOut } from 'next-auth/react';
 import Header from "@/components/Header"
+import Modal from "@/components/Modal"
 import Head from "next/head"
 import Router from "next/router"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
@@ -9,6 +10,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import Image from "next/image"
 import profile from "@/assets/default.png"
 import CloseIcon from '@mui/icons-material/Close';
+import { UserContext } from '@/context/MainContext'
 
 const loading = require("@/assets/lottiefiles/loading.json")
 
@@ -33,6 +35,9 @@ function Profile() {
     const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
+
+  const { handleOpenModal } = useContext(UserContext)
+
 
     const handleFileInputChange = (event: any) => {
         const file = event.target.files[0];
@@ -73,10 +78,9 @@ function Profile() {
             setFileName("")
             setError("");
             setIsLoading(false);
-            alert('Profile updated successfully. Changes might take a while to fully take effect. You\'ve been signed out');
-
+            
             // sign out user to update changes on the client
-            signOut()
+            handleOpenModal()
         } catch (err: any) {
             // Handle errors by displaying an error message
             if (err.response.status === 413) {
@@ -115,7 +119,7 @@ function Profile() {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <Header />
-
+                <Modal />
                 {user.username ?
                     <>
                         <div className='w-auto block md:flex items-start justify-center gap-3 mx-auto mt-5 md:mt-12'>
@@ -207,7 +211,7 @@ function Profile() {
                         <br />
                     </>
                     :
-                    <div className="w-screen h-screen flex items-center justify-center ">
+                    <div className="flex items-center justify-center ">
                         <Player
                             autoplay
                             loop

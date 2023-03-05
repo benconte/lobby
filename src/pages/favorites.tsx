@@ -45,13 +45,24 @@ function Favorites() {
           <span className="text-gray-400 text-base">All your favorites in one place for you to review</span>
         </div>
 
-        {hotels && (
+        {hotels.length > 0 ? (
           <div className="w-full px-3 md:px-10 py-3 grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {hotels.map((hotel: any, index: Number) => (
               <Hotel hotel={hotel} key={index} />
             ))}
           </div>
-        )}
+        ) :
+          <div className="flex items-center justify-center ">
+            <Player
+              autoplay
+              loop
+              src={loading}
+              style={{ width: 300, height: 300 }}
+            >
+              <Controls visible={false} />
+            </Player>
+          </div>
+        }
       </div>
     )
   }
