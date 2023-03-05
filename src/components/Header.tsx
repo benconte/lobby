@@ -33,8 +33,8 @@ function Header() {
       setIsAuthenticated(true)
 
       if (session && session.user) {
-            console.log(session.user)
-            fetch(`/api/getUser/${session?.user?.email}`)
+        console.log(session.user)
+        fetch(`/api/getUser/${session?.user?.email}`)
           .then(res => res.json())
           .then(data => {
             setAuthUser(data)
@@ -56,12 +56,13 @@ function Header() {
         <div className='hidden md:block w-[1px] h-6 bg-gray-400 mx-1 lg:mx-4'></div>
 
         <ul className='hidden md:flex items-center gap-3 m-0 list-none'>
-          {/* <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Categories</li> */}
           <Link href="/discover" className="no-underline">
             <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Discover</li>
           </Link>
           <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Rooms</li>
-          <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>About Us</li>
+          <Link href="/aboutus" className="no-underline">
+            <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>About us</li>
+          </Link>
         </ul>
       </div>
       <div className='flex items-center gap-1 lg:gap-3'>
