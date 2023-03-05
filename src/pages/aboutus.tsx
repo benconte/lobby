@@ -15,7 +15,7 @@ function aboutus({ }: Props) {
             </Head>
             <Header />
 
-            <div className="w-full md:w-6/12 p-5 h-auto md:rounded-lg">
+            <div className="w-full md:w-8/12 lg:w-6/12 p-5 h-auto md:rounded-lg">
                 <div className="w-full my-5 text-center">
                     <h3 className="text-4xl text-[var(--lightblue)] font-medium font-dancingScript">Lobby</h3>
                     <span className="text-zinc-600 text-sm">Discover Your Next Adventure with Our Comprehensive Hotel Booking Platform</span>
