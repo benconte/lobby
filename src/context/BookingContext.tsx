@@ -30,15 +30,18 @@ function BookingContext({ children }: { children: any }) {
   const [error, setError] = useState("")
   const [tabIndex, setTabIndex] = useState(1)
   const [success, setSuccess] = useState<any>()
+  const [isBookingLoading, setIsBookingLoading] = useState<boolean>(false)
 
   const router = useRouter()
 
   const bookHotel = async () => {
     // handle booking logic here
     // and save data to db
+    setIsBookingLoading(true)
     if (!validator.isLength(firstname, { min: 3 }) || !validator.isLength(lastname, { min: 3 }) || !validator.isEmail(email)) {
       setError("Please fill out all the fields")
       alert("Please fill out all the fields")
+      setIsBookingLoading(false)
       return
     }
 
@@ -61,15 +64,18 @@ function BookingContext({ children }: { children: any }) {
         if (data.success) {
           setError("")
           setSuccess("Hotel booked sucessfully!")
+          setIsBookingLoading(false)
           router.push("/success")
         }
         else {
           setError(data.message)
+          setIsBookingLoading(false)
           console.log(error)
         }
       })
       .catch(err => {
         setError(err)
+        setIsBookingLoading(false)
         throw new Error(err)
       })
   }
@@ -110,7 +116,9 @@ function BookingContext({ children }: { children: any }) {
       setCheckOutDate,
       checkInDate,
       setCheckInDate,
-      bookHotel
+      bookHotel,
+      isBookingLoading,
+      setIsBookingLoading
     }}>
       {children}
     </BookContext.Provider>
