@@ -5,7 +5,7 @@ import { BookContext } from '@/context/BookingContext'
 function Summary({ hotel }: { hotel: any }) {
   const [checkInDate, setCheckInDate] = useState<any>()
   const [checkoutDate, setCheckoutDate] = useState<any>()
-  const { price, bookHotel, setHotel, setIsBookingLoading, isBookingLoading } = useContext(BookContext)
+  const { price, bookHotel, setHotel, setIsBookingLoading, isBookingLoading, error } = useContext(BookContext)
 
   useEffect(() => {
     let today = new Date();
@@ -67,6 +67,9 @@ function Summary({ hotel }: { hotel: any }) {
           <span className='text-base text-[var(--green)] font-medium'>${price}</span>
         </p>
       </div>
+
+      {error.length > 0 && <div className="w-full flex items-center py-3 justify-center font-medium rounded px-4 bg-red-400 text-white mt-3">{error}</div>}
+
       <button type="button" className='w-full rounded-lg text-white bg-[var(--blue)] capitalize outline-none py-3 mt-3 text-sm' onClick={() => {
         setHotel(hotel)
         bookHotel()

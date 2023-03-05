@@ -81,7 +81,7 @@ function SubDetails({ hotel }: any) {
     return (
         <div className="w-full bg-white p-3 rounded">
             <div className="w-full flex flex-col md:flex-row items-start gap-3 p-3 border-2 border-solid border-gray-200 rounded-lg">
-                {/* hotell info card */}
+                {/* hotel info card */}
                 <div className="w-full md:w-48 h-52 rounded relative overflow-hidden">
                     <Image
                         src={hotel.image_url}
@@ -95,7 +95,7 @@ function SubDetails({ hotel }: any) {
                 </div>
                 <div className='flex-1'>
                     <h3 className="text-base text-[var(--green)] font-medium">{hotel.name}</h3>
-                    <span className="text-lg text-[var(--dark-blue)] font-medium">King bed stylish Appartement with Loft style Family Room</span>
+                    <span className="text-lg text-[var(--dark-blue)] font-medium">King bed stylish Appartment with Loft style Family Room</span>
                     <div className='flex items-center gap-2'>
                         <span>{handleStars()}</span>
                         {/* <b className='text-base text-[var(--dark-blue)]'>{hotel.rating}</b> */}
@@ -135,7 +135,7 @@ function SubDetails({ hotel }: any) {
                     </div>
                     <div className='flex flex-col justify-start gap-2'>
                         <label className='text-xs font-medium font-mono antialiased text-gray-400 uppercase' htmlFor='phone'>Phone Number</label>
-                        <input id="phone" className='h-9 rounded outline border-none focus:shadow-lg focus:outline-[var(--lightblue)] outline-gray-200 text-sm px-2 outline-2 outline-offset-0' type="number" placeholder='Phonenumber....' name="phone" onChange={(e) => setPhone(e.target.value)} value={phone} />
+                        <input id="phone" className='h-9 rounded outline border-none focus:shadow-lg focus:outline-[var(--lightblue)] outline-gray-200 text-sm px-2 outline-2 outline-offset-0' type="number" placeholder='Phone Number....' name="phone" onChange={(e) => setPhone(e.target.value)} value={phone} />
                     </div>
                     <div className='flex flex-col justify-start gap-2'>
                         <label className='text-xs font-medium font-mono antialiased text-gray-400 uppercase' htmlFor='checkIn'>check in</label>

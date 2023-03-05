@@ -27,7 +27,7 @@ function BookingContext({ children }: { children: any }) {
   const [checkInDate, setCheckInDate] = useState<any>()
   const [checkOutDate, setCheckOutDate] = useState<Date>()
   const [price, setPrice] = useState<any>(250)
-  const [error, setError] = useState("")
+  const [error, setError] = useState<string>("")
   const [tabIndex, setTabIndex] = useState(1)
   const [success, setSuccess] = useState<any>()
   const [isBookingLoading, setIsBookingLoading] = useState<boolean>(false)
@@ -68,13 +68,12 @@ function BookingContext({ children }: { children: any }) {
           router.push("/success")
         }
         else {
-          setError(data.message)
+          setError(data.message as string)
           setIsBookingLoading(false)
-          console.log(error)
         }
       })
       .catch(err => {
-        setError(err)
+        setError(err as string)
         setIsBookingLoading(false)
         throw new Error(err)
       })
@@ -118,7 +117,9 @@ function BookingContext({ children }: { children: any }) {
       setCheckInDate,
       bookHotel,
       isBookingLoading,
-      setIsBookingLoading
+      setIsBookingLoading,
+      error,
+      setError
     }}>
       {children}
     </BookContext.Provider>
