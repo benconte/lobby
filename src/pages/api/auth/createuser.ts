@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt'
 import { MongoClient } from 'mongodb';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import validator from 'validator';
-
 const saltRounds = 10;
+
 
 async function CreateUser(req: NextApiRequest, res: NextApiResponse) {
     const salt = await bcrypt.genSalt(saltRounds);
@@ -28,7 +28,6 @@ async function CreateUser(req: NextApiRequest, res: NextApiResponse) {
         await client.connect(); // await for connection to the client
         const db = client.db(process.env.DB_NAME);
         const users = db.collection('users');
-
         // check if there is an existing user
         const existingUser = await users.findOne({ email });
 

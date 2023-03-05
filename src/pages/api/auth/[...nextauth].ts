@@ -37,7 +37,7 @@ const authOptions: NextAuthOptions = {
                         const match = await compare(password, user.password)
                         
                         if (match) {
-                            return { id: user?._id, name: user?.username, email: user?.email }
+                            return { _id: user?._id, name: user?.username, email: user?.email }
                         } else {
                             return null
                         }

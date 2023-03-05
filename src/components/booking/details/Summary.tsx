@@ -26,10 +26,10 @@ function Summary({ hotel }: { hotel: any }) {
     }).format(nxtMonth))
   }, [])
   return (
-    <div className="w-2/6 rounded bg-white p-4 h-auto">
+    <div className="w-full lg:w-2/6 rounded bg-white p-4 h-auto">
       <h3>Reservation Summary</h3>
       <div className='w-full border border-solid border-gray-300 bg-gray-50 p-3 mt-4 rounded-lg'>
-        <div className='flex w-full items-center justify-between'>
+        <div className='flex w-full items-center justify-between gap-2'>
           <div className="block">
             <span className='text-sm text-gray-400'>Check in</span>
             <p className='text-sm font-bold text-[var(--dark-blue)]'>{checkInDate}</p>

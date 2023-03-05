@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 import SettingsIcon from '@mui/icons-material/Settings';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Image from "next/image"
-import profile from "@/assets/profile.jpg"
+import profile from "@/assets/default.png"
 import SearchIcon from '@mui/icons-material/Search';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -11,23 +11,42 @@ import Link from 'next/link';
 import { useRouter } from "next/router"
 import { useSession, signOut } from 'next-auth/react';
 
+type user = {
+  _id: object;
+  username: string;
+  email: string;
+  profile: string;
+  favorites: []
+}
+
 function Header() {
   const [profileDropdown, setProfileDropdown] = useState(false)
   const [isSearchVisible, setisSearchVisible] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [authUser, setAuthUser] = useState<user>({} as user)
   const router = useRouter()
 
-  const { status } = useSession()
+  const { status, data: session } = useSession()
 
   useEffect(() => {
     if (status === "authenticated") {
       setIsAuthenticated(true)
+
+      if (session && session.user) {
+            console.log(session.user)
+            fetch(`/api/getUser/${session?.user?.email}`)
+          .then(res => res.json())
+          .then(data => {
+            setAuthUser(data)
+          })
+      }
+
     } else {
       setIsAuthenticated(false)
     }
 
     if (router.pathname !== "/") setisSearchVisible(true)
-  }, [router.pathname, status])
+  }, [router.pathname, status, session])
   return (
     <div className="w-full z-20 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-5 lg:px-10">
       <div className="h-full flex items-center gap-3 cursor-pointer">
@@ -63,10 +82,12 @@ function Header() {
         </Link>
         {isAuthenticated ?
           <div className='relative'>
-            <Image src={profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} />
+            <Image src={authUser.profile ? authUser.profile : profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} />
             {/* dropdown */}
             <div className={`bg-white border border-solid border-gray-300 w-40 ${profileDropdown ? "flex top-12" : "hidden top-16"} flex-col gap-3 justify-start rounded absolute  right-0`}>
-              <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Profile</span>
+              <Link href="/profile" className="no-underline">
+                <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Profile</span>
+              </Link>
               <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Settings</span>
               <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white'>Help</span>
               <span className='flex items-center h-10 px-2 hover:bg-[var(--lightblue)] cursor-pointer hover:text-white' onClick={() => signOut()}>Logout</span>

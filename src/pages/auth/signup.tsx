@@ -170,15 +170,15 @@ function Register() {
                 <div className='w-full relative p-0 m-0'>
                   <label className={`absolute duration-200 ${emailLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"}  font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="email">Email</label>
                   <div className={`flex items-center  border border-solid ${emailAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
-                    <input id="email" name="email" type="email" className="bg-transparent text-base border-none outline-none text-zinc-600 flex-1 h-9 px-3" autoComplete='off' onFocus={animateEmail} onBlur={animateEmail} onChange={(e) => setEmail(e.target.value)} />
+                    <input id="email" name="email" type="email" className="bg-transparent text-base border-none outline-none text-zinc-600 flex-1 h-9 px-3" onFocus={animateEmail} autoComplete="new-password" onBlur={animateEmail} onChange={(e) => setEmail(e.target.value)} />
                     <AlternateEmailIcon className={`text-lg ${emailAnimated ? "text-[#375DC2]" : "text-zinc-500 "} cursor-pointer mx-2`} onClick={animateEmail} />
                   </div>
                 </div>
 
                 <div className='w-full relative p-0 m-0'>
-                  <label className={`absolute duration-200 ${passwordLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"} font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="password">password</label>
+                  <label className={`absolute duration-200 ${passwordLabel ? "-top-2 text-[#375DC2] bg-white" : "top-3 text-zinc-400"} font-medium text-sm z-10 leading-none mx-3 p-0 w-auto`} htmlFor="new-pas">password</label>
                   <div className={`flex items-center  border border-solid ${passwordAnimated ? "border-[#375DC2] bg-white shadow-xl" : "border-gray-200 bg-gray-50"} rounded overflow-hidden `}>
-                    <input type="password" id="password" name="password" className="bg-transparent text-base border-none outline-none text-zinc-600 flex-1 h-9 px-3" autoComplete='off' onFocus={animatePassword} onBlur={animatePassword} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" id="password" name="new-pas" className="bg-transparent text-base border-none outline-none text-zinc-600 flex-1 h-9 px-3" autoComplete="new-password" onFocus={animatePassword} onBlur={animatePassword} onChange={(e) => setPassword(e.target.value)} />
                     <LockOutlinedIcon className={`text-lg ${passwordAnimated ? "text-[#375DC2]" : "text-zinc-500 "} cursor-pointer mx-2`} onClick={animatePassword} />
                   </div>
                 </div>

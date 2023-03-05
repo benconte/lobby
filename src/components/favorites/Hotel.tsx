@@ -24,8 +24,8 @@ function Hotel({ hotel }: any) {
                         <h4 className="truncate font-medium text-base text-[var(--dark)]">{hotel.name}</h4>
                         {hotel.rating &&
                             <div className="flex items-center">
-                                <StarOutlinedIcon className="text-base text-zin-800" />
-                                <span className="text-base font-lightbold text-zinc-800">{hotel.rating}</span>
+                                <StarOutlinedIcon className="text-sm text-yellow-500" />
+                                <span className="text-sm font-lightbold text-zinc-800">{hotel.rating}</span>
                             </div>
                         }
                     </div>
