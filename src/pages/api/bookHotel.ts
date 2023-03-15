@@ -24,7 +24,7 @@ async function BookHotel(req: NextApiRequest, res: NextApiResponse) {
           }
         res.status(200).json({ success: "Hotel booked successfully" })
     } catch (err: any) {
-        res.status(500).json({ message: "Unable to establish connection to DATABASE. Please try again later", error: err })
+        res.status(500).json({ message: "Unable to book hotel right now. Please try again later", error: err })
     } finally {
         client.close()
     }
