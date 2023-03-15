@@ -5,8 +5,9 @@ import Head from "next/head"
 import Hotel from "@/components/favorites/Hotel"
 import Router from "next/router"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import Link from "next/link"
 
-const loading = require("@/assets/lottiefiles/loading.json")
+const loading = require("@/assets/lottiefiles/no-results.json")
 
 
 function Favorites() {
@@ -40,19 +41,21 @@ function Favorites() {
         </Head>
         <Header />
 
-        <div className="w-full my-5 text-center">
-          <h3 className="text-2xl text-[var(--blue)] font-medium">Favorites</h3>
-          <span className="text-gray-400 text-base">All your favorites in one place for you to review</span>
-        </div>
-
         {hotels.length > 0 ? (
-          <div className="w-full px-3 md:px-10 py-3 grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {hotels.map((hotel: any, index: Number) => (
-              <Hotel hotel={hotel} key={index} />
-            ))}
-          </div>
+          <>
+            <div className="w-full my-5 text-center">
+              <h3 className="text-2xl text-[var(--blue)] font-medium">Favorites</h3>
+              <span className="text-gray-400 text-base">All your favorites in one place for you to review</span>
+            </div>
+
+            <div className="w-full px-3 md:px-10 py-3 grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {hotels.map((hotel: any, index: Number) => (
+                <Hotel hotel={hotel} key={index} />
+              ))}
+            </div>
+          </>
         ) :
-          <div className="flex items-center justify-center ">
+          <div className="flex items-center justify-center flex-col gap-4 ">
             <Player
               autoplay
               loop
@@ -61,6 +64,10 @@ function Favorites() {
             >
               <Controls visible={false} />
             </Player>
+            <div className='flex flex-col items-center justify-center gap-1'>
+              <h2 className="text-lg text-[var(--dark-blue)] font-medium">Looks like you no favorites</h2>
+              <Link href="/" className='text-[var(--blue)] text-sm underline'>Back to home page</Link>
+            </div>
           </div>
         }
       </div>

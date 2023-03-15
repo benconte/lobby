@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Image from "next/image"
 import Link from "next/link"
 import small_0 from "@/assets/icons/yelp_stars/web_and_ios/small/small_0.png"
