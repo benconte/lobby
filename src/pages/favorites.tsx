@@ -14,10 +14,9 @@ const loading = require("@/assets/lottiefiles/loading.json")
 function Favorites() {
   const { status, data: session } = useSession()
   const [hotels, setHotels] = useState<any>([])
-  const [isLoading, setIsLoading] = useState<any>(false)
+  const [isLoading, setIsLoading] = useState<any>(true)
 
   useEffect(() => {
-    setIsLoading(true)
     if (status === "unauthenticated") Router.replace("/auth/signin"); // redirect to sign in not authenticated
 
     if (status === "authenticated") {
