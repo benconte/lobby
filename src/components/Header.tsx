@@ -73,15 +73,15 @@ function Header() {
         <Link href="/" className="no-underline">
           <h3 className='text-xl md:text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
         </Link>
-        <div className='block w-[1px] h-6 bg-gray-400 mx-1 lg:mx-4'></div>
+        <div className='hidden md:block w-[1px] h-6 bg-gray-400 mx-1 lg:mx-4'></div>
 
         <ul className='flex items-center gap-3 m-0 list-none'>
           <Link href="/discover" className="no-underline">
-            <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Discover</li>
+            <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>Discover</li>
           </Link>
-          <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Rooms</li>
+          <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>Rooms</li>
           <Link href="/aboutus" className="no-underline">
-            <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>About us</li>
+            <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>About us</li>
           </Link>
         </ul>
       </div>
