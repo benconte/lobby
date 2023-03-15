@@ -71,11 +71,11 @@ function Header() {
     <div className="w-full z-20 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-5 lg:px-10">
       <div className="h-full flex items-center gap-3 cursor-pointer">
         <Link href="/" className="no-underline">
-          <h3 className='text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
+          <h3 className='text-xl md:text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
         </Link>
-        <div className='hidden md:block w-[1px] h-6 bg-gray-400 mx-1 lg:mx-4'></div>
+        <div className='block w-[1px] h-6 bg-gray-400 mx-1 lg:mx-4'></div>
 
-        <ul className='hidden md:flex items-center gap-3 m-0 list-none'>
+        <ul className='flex items-center gap-3 m-0 list-none'>
           <Link href="/discover" className="no-underline">
             <li className='text-gray-400 text-base cursor-pointer hover:text-zinc-600'>Discover</li>
           </Link>
