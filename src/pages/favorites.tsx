@@ -7,14 +7,17 @@ import Router from "next/router"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import Link from "next/link"
 
-const loading = require("@/assets/lottiefiles/no-results.json")
+const noResult = require("@/assets/lottiefiles/no-results.json")
+const loading = require("@/assets/lottiefiles/loading.json")
 
 
 function Favorites() {
   const { status, data: session } = useSession()
   const [hotels, setHotels] = useState<any>([])
+  const [isLoading, setIsLoading] = useState<any>(false)
 
   useEffect(() => {
+    setIsLoading(true)
     if (status === "unauthenticated") Router.replace("/auth/signin"); // redirect to sign in not authenticated
 
     if (status === "authenticated") {
@@ -25,6 +28,7 @@ function Favorites() {
         },
       }).then(res => res.json()).then((data: any) => {
         console.log(data)
+        setIsLoading(false)
         setHotels(data)
       })
     }
@@ -56,18 +60,31 @@ function Favorites() {
           </>
         ) :
           <div className="flex items-center justify-center flex-col gap-4 ">
-            <Player
-              autoplay
-              loop
-              src={loading}
-              style={{ width: 300, height: 300 }}
-            >
-              <Controls visible={false} />
-            </Player>
-            <div className='flex flex-col items-center justify-center gap-1'>
-              <h2 className="text-lg text-[var(--dark-blue)] font-medium">Looks like you no favorites</h2>
-              <Link href="/" className='text-[var(--blue)] text-sm underline'>Back to home page</Link>
-            </div>
+            {isLoading ?
+              <Player
+                autoplay
+                loop
+                src={loading}
+                style={{ width: 300, height: 300 }}
+              >
+                <Controls visible={false} />
+              </Player>
+              :
+              <>
+                <Player
+                  autoplay
+                  loop
+                  src={noResult}
+                  style={{ width: 300, height: 300 }}
+                >
+                  <Controls visible={false} />
+                </Player>
+                <div className='flex flex-col items-center justify-center gap-1'>
+                  <h2 className="text-lg text-[var(--dark-blue)] font-medium">Looks like you no favorites</h2>
+                  <Link href="/" className='text-[var(--blue)] text-sm underline'>Back to home page</Link>
+                </div>
+              </>
+            }
           </div>
         }
       </div>
