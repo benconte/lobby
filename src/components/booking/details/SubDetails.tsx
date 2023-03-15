@@ -48,7 +48,7 @@ function SubDetails({ hotel }: any) {
     }
 
     const changePrice = (e: any, money: number) => {
-        if(e.target.checked) {
+        if (e.target.checked) {
             setPrice(price + money)
         } else {
             setPrice(price - money)
@@ -95,7 +95,9 @@ function SubDetails({ hotel }: any) {
                 </div>
                 <div className='flex-1'>
                     <h3 className="text-base text-[var(--green)] font-medium">{hotel.name}</h3>
-                    <span className="text-lg text-[var(--dark-blue)] font-medium">King bed stylish Appartment with Loft style Family Room</span>
+                    <span className="text-lg text-[var(--dark-blue)] font-medium">
+                        Experience the Comforts of Home with Our Spacious and Modern Apartment
+                    </span>
                     <div className='flex items-center gap-2'>
                         <span>{handleStars()}</span>
                         {/* <b className='text-base text-[var(--dark-blue)]'>{hotel.rating}</b> */}

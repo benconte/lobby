@@ -1,15 +1,13 @@
-import HotelIcon from '@mui/icons-material/Hotel';
 import React, { useState, useEffect } from "react"
-import SettingsIcon from '@mui/icons-material/Settings';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Image from "next/image"
 import profile from "@/assets/default.png"
 import SearchIcon from '@mui/icons-material/Search';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Link from 'next/link';
 import { useRouter } from "next/router"
 import { useSession, signOut } from 'next-auth/react';
+import SearchResults from "@/components/SearchResults"
+import ClickAwayListener from 'react-click-away-listener';
 
 type user = {
   _id: object;
@@ -24,9 +22,31 @@ function Header() {
   const [isSearchVisible, setisSearchVisible] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [authUser, setAuthUser] = useState<user>({} as user)
+
+  const [search, setSearch] = useState<any>("")
+  const [city, setCity] = useState<any>("NYC")
+  const [searchResult, setSearchResult] = useState<[]>([])
+  const [isSearchOpen, setIsSearchOpen] = useState<any>(false)
+
   const router = useRouter()
 
   const { status, data: session } = useSession()
+
+  const handleSearch = async (text: string) => {
+    setSearch(text)
+    setIsSearchOpen(true)
+
+    const req = await fetch(`/api/search?search=${search}&city=${city}`);
+    if (!req.ok) return
+    const res = await req.json()
+    setSearchResult(res.data.businesses)
+    console.log(res)
+  }
+
+  const handleClickAway = () => {
+    setIsSearchOpen(false)
+    console.log("clicked away")
+  };
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -67,10 +87,35 @@ function Header() {
       </div>
       <div className='flex items-center gap-1 lg:gap-3'>
         {isSearchVisible &&
-          <div className='h-10 hidden md:flex items-center bg-gray-100 rounded-full'>
-            <input type="search" placeholder='Search for a hotel...' className='w-48 h-full outline-none px-4 bg-transparent border-0 text-gray-700' />
-            <SearchIcon className="text-xl text-gray-600 cursor-pointer mr-4" />
-          </div>
+        // the clickAway listener will close this search dropdown when user click on a element outside this it's children
+          <ClickAwayListener onClickAway={handleClickAway}>
+            <div className='h-10 p-1 hidden md:flex items-center bg-gray-100 rounded-full relative'>
+              <input type="search" placeholder='Search for a hotel...' className='w-48 h-full outline-none px-3 bg-transparent border-0 text-[var(--dark-blue)]' onChange={(e) => handleSearch(e.target.value)} />
+              <input type="text" placeholder="city.." className="h-full w-16 outline-none rounded-r-full text-sm px-2 bg-white text-[var(--blue)] border-0" onChange={(e) => {
+                setCity(e.target.value)
+                setSearch("")
+              }} value={city} />
+
+              {/*show the box only if we have a search */}
+              {isSearchOpen &&
+                <>
+                  {search.length > 0 && city.length > 0 ? (
+
+                    <div className="absolute top-14 right-0 w-80 h-80 bg-white rounded-lg border border-solid border-gray-200 overflow-y-auto overflow-x-none">
+                      {searchResult && searchResult.length > 0 && searchResult.map((hotel, index) => (
+                        <SearchResults hotel={hotel} key={index} />
+                      ))}
+                    </div>
+
+                  ) :
+                    <div className="absolute top-14 right-0 w-80 h-80 bg-white rounded-lg border border-solid border-gray-200 overflow-y-auto overflow-x-none flex items-center justify-center">
+                      <h3 className="text-gray-400 font-medium text-sm">No results found.</h3>
+                    </div>
+                  }
+                </>
+              }
+            </div>
+          </ClickAwayListener>
         }
 
         {/* <span className='flex items-center justify-center text-gray-500 hover:text-[var(--lightblue)] cursor-pointer hover:bg-gray-100 rounded-full'>
@@ -102,7 +147,7 @@ function Header() {
           </div>
         }
       </div>
-    </div>
+    </div >
   )
 }
 

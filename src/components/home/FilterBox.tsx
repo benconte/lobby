@@ -17,7 +17,7 @@ function FilterBox({ setBusinesses }: {setBusinesses: any}) {
 
     const fetchData = async () => {
         setBusinesses([])
-        let url: string
+        let url: string;
         if(term.length > 0) {
             url = `/api/filterHandler?term=${term}&categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
         } else {
