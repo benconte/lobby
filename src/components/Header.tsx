@@ -8,6 +8,8 @@ import { useRouter } from "next/router"
 import { useSession, signOut } from 'next-auth/react';
 import SearchResults from "@/components/SearchResults"
 import ClickAwayListener from 'react-click-away-listener';
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 
 type user = {
   _id: object;
@@ -22,6 +24,7 @@ function Header() {
   const [isSearchVisible, setisSearchVisible] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [authUser, setAuthUser] = useState<user>({} as user)
+  const [isLeftNavVisible, setIsLeftNavVisible] = useState(false)
 
   const [search, setSearch] = useState<any>("")
   const [city, setCity] = useState<any>("NYC")
@@ -70,24 +73,43 @@ function Header() {
   return (
     <div className="w-full z-20 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-5 lg:px-10">
       <div className="h-full flex items-center gap-3 cursor-pointer">
+        <MenuIcon className="block md:hidden text-2xl text-gray-400 cursor-pointer" onClick={() => setIsLeftNavVisible(true)} />
         <Link href="/" className="no-underline">
           <h3 className='text-xl md:text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
         </Link>
         <div className='hidden md:block w-[1px] h-6 bg-gray-400 mx-1 lg:mx-4'></div>
 
-        <ul className='flex items-center gap-3 m-0 list-none'>
+        <ul className='hidden md:flex items-center gap-3 m-0 list-none'>
           <Link href="/discover" className="no-underline">
             <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>Discover</li>
           </Link>
           <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>Rooms</li>
           <Link href="/aboutus" className="no-underline">
-            <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>About us</li>
+            <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600 truncate'>About us</li>
           </Link>
         </ul>
+
+        {isLeftNavVisible &&
+          <div className="fixed top-0 left-0 bottom-0 w-full block bg-white px-4 py-3 z-40 md:hidden">
+            <Link href="/" className="no-underline mb-5 flex items-center justify-between">
+              <h3 className='text-xl md:text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
+              <CloseIcon className="text-2xl text-gray-400 cursor-pointer" onClick={() => setIsLeftNavVisible(false)} />
+            </Link>
+            <ul className='flex flex-col justify-center gap-3 m-0 list-none'>
+              <Link href="/discover" className="no-underline">
+                <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>Discover</li>
+              </Link>
+              <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>Rooms</li>
+              <Link href="/aboutus" className="no-underline">
+                <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600 truncate'>About us</li>
+              </Link>
+            </ul>
+          </div>
+        }
       </div>
       <div className='flex items-center gap-1 lg:gap-3'>
         {isSearchVisible &&
-        // the clickAway listener will close this search dropdown when user click on a element outside this it's children
+          // the clickAway listener will close this search dropdown when user click on a element outside this it's children
           <ClickAwayListener onClickAway={handleClickAway}>
             <div className='h-10 p-1 hidden md:flex items-center bg-gray-100 rounded-full relative'>
               <input type="search" placeholder='Search for a hotel...' className='w-48 h-full outline-none px-3 bg-transparent border-0 text-[var(--dark-blue)]' onChange={(e) => handleSearch(e.target.value)} />

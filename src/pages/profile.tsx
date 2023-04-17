@@ -126,7 +126,7 @@ function Profile() {
                             <div className="w-full md:w-6/12 p-5 h-auto md:rounded-lg bg-white">
                                 {/* profile card */}
                                 <div className="w-full flex items-center gap-3 border-b border-solid border-gray-300 mb-3 pb-3">
-                                    <Image src={user && user.profile ? user.profile : profile} alt="profile picture" width={50} height={50} className="rounded-full" />
+                                    <Image src={user && user.profile ? user.profile : profile} alt="profile picture" width={50} height={50} className="rounded-full object-cover overflow-hidden" />
                                     <div className="flex flex-col justify-center">
                                         <h3 className="text-lg font-medium text-[var(--dark)] leading-5">{user && user.username}</h3>
                                         <span className="text-sm font-medium text-gray-500">{user && user.email}</span>
@@ -160,7 +160,7 @@ function Profile() {
                                                     </div>
                                                 }
                                             </div>
-                                            <p className="text-sm text-gray-500 basis-full">{filename.length > 0 ? filename : "Upload a profile picture(jpg, jpeg, png). Max size 1MB"}</p>
+                                            <p className="text-sm text-gray-500 basis-full truncate">{filename.length > 0 ? filename : "Upload a profile picture(jpg, jpeg, png). Max size 1MB"}</p>
                                             <label htmlFor='file' className="px-3 py-2 text-sm rounded-md cursor-pointer hover:bg-[var(--lightblue)] hover:text-white text-[var(--dark)] border-2 border-solid border-gray-300 hover:border-transparent">
                                                 Browse
                                             </label>

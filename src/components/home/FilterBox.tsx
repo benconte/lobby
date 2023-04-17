@@ -6,7 +6,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BorderAllRoundedIcon from '@mui/icons-material/BorderAllRounded';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 
-function FilterBox({ setBusinesses }: {setBusinesses: any}) {
+function FilterBox({ setBusinesses }: { setBusinesses: any }) {
     const [term, setTerm] = useState("")
     const [category, setCategory] = useState("hotels")
     const [isOpen, setIsOpen] = useState(false)
@@ -18,12 +18,12 @@ function FilterBox({ setBusinesses }: {setBusinesses: any}) {
     const fetchData = async () => {
         setBusinesses([])
         let url: string;
-        if(term.length > 0) {
+        if (term.length > 0) {
             url = `/api/filterHandler?term=${term}&categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
         } else {
             url = `/api/filterHandler?categories=${category}&location=${location}&is_closed=${status === "open" ? false : true}&limit=${limit}`
         }
-        
+
         const rq = await fetch(url)
         const data = await rq.json()
 
@@ -41,7 +41,7 @@ function FilterBox({ setBusinesses }: {setBusinesses: any}) {
             </div>
 
             {/* filter section */}
-            <div className='block border-2 border-solid border-gray-300 h-full p-3 rounded' style={{ flex: 1 }}>
+            <div className='block border-2 border-solid border-gray-300 h-full p-3 rounded overflow-hidden' style={{ flex: 1 }}>
                 <header className="flex items-start w-full gap-2 mb-3">
                     <TuneIcon />
                     <h3>Filters</h3>
@@ -55,7 +55,7 @@ function FilterBox({ setBusinesses }: {setBusinesses: any}) {
                     </div>
 
 
-                    <div className="flex items-center gap-2 w-full" style={{ zIndex: 5 }}>
+                    <div className="flex items-center flex-wrap gap-2 w-full" style={{ zIndex: 5 }}>
                         {/* city section */}
                         <div className="flex flex-col justify-center gap-1 mt-3 w-40">
                             <p className="flex items-center gap-1">
@@ -66,13 +66,13 @@ function FilterBox({ setBusinesses }: {setBusinesses: any}) {
                         </div>
 
                         {/* filter by section */}
-                        <div className="flex flex-col justify-center gap-1 mt-3 w-40">
+                        <div className="flex flex-col justify-center gap-1 mt-3 w-auto md:w-40">
                             <p className="flex items-center gap-1">
                                 <BorderAllRoundedIcon className="text-base text-zinc-600" />
                                 <span className="font-medium text-zinc-600">Type</span>
                             </p>
                             <div className="flex relative">
-                                <div className="flex items-center h-10 bg-gray-100 px-3 justify-between rounded-full w-40 cursor-pointer" onClick={() => setsearchTypeDrop(!searchTypeDrop)}>
+                                <div className="flex items-center gap-5 h-10 bg-gray-100 px-3 justify-between rounded-full w-auto md:w-40 cursor-pointer" onClick={() => setsearchTypeDrop(!searchTypeDrop)}>
                                     <span className="font-medium text-zinc-600">{category}</span>
                                     <KeyboardArrowDownIcon className="text-base text-zinc-600" />
                                 </div>
@@ -90,22 +90,22 @@ function FilterBox({ setBusinesses }: {setBusinesses: any}) {
                         </div>
 
                         {/* change status section */}
-                        <div className="flex flex-col justify-center gap-1 mt-3 w-40">
+                        <div className="flex flex-col justify-center gap-1 mt-3 w-auto md:w-40">
                             <p className="flex items-center gap-1">
                                 <LockOpenRoundedIcon className="text-base text-zinc-600" />
                                 <span className="font-medium text-zinc-600">Status</span>
                             </p>
                             <div className="flex relative">
-                                <div className="flex items-center h-10 bg-gray-100 px-3 justify-between rounded-full w-32 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+                                <div className="flex items-center gap-3 h-10 bg-gray-100 px-3 justify-between rounded-full w-auto md:w-32 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
                                     <span>{status}</span>
                                     <KeyboardArrowDownIcon className="text-base text-zinc-600" />
                                 </div>
                                 <div className={`${isOpen ? "flex" : "hidden"} flex-col justify-start gap-2 absolute top-12 rounded w-full bg-white border border-solid border-gray-300`} style={{ zIndex: 5 }}>
-                                    <span className='hover:bg-[var(--lightblue)] text-zin-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
+                                    <span className='hover:bg-[var(--lightblue)] text-zinc-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
                                         setStatus("open")
                                         setIsOpen(false)
                                     }}>Open</span>
-                                    <span className='hover:bg-[var(--lightblue)] text-zin-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
+                                    <span className='hover:bg-[var(--lightblue)] text-zinc-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
                                         setStatus("closed")
                                         setIsOpen(false)
                                     }}>Closed</span>

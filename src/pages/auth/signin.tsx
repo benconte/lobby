@@ -22,6 +22,7 @@ function Login() {
   const [password, setPassword] = useState<string>("")
   const [error, setError] = useState<string>("")
   const [checkmark, setCheckmark] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter()
   const { status } = useSession()
@@ -56,7 +57,7 @@ function Login() {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
-
+    setIsLoading(true);
     // handle sign in
     const res = await signIn("credentials", {
       email: email,
@@ -66,10 +67,12 @@ function Login() {
     console.log(res)
     if (res?.ok) {
       // redirect if user was authenticated
+      setIsLoading(false);
       setError("")
       router.push("/")
     } else {
       // handle error from here
+      setIsLoading(false);
       setError("Invalid Email and Password. Check your data and try again!")
     }
   }
@@ -153,11 +156,13 @@ function Login() {
                 </div>
                 <Link href="#" className='text-sm text-[#375DC2] hover:underline'>Recover Password</Link>
               </div>
-              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>Signin</button>
-              <button type="button" className='mb-4 w-full h-10 text-zinc-500 border border-solid border-gray-300 rounded-md bg-white flex items-center gap-3 justify-center outline-none'>
+              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>
+                {isLoading ? <div className="w-5 h-5 mx-auto border-2 border-solid border-white border-r-transparent rounded-full animate-spin"></div> : 'Signin'}
+              </button>
+              {/* <button type="button" className='mb-4 w-full h-10 text-zinc-500 border border-solid border-gray-300 rounded-md bg-white flex items-center gap-3 justify-center outline-none'>
                 <Image src={google_svg} alt="nona" width={20} height={20} />
                 Sign in with google
-              </button>
+              </button> */}
 
               <p className='w-full flex items-center text-sm text-gray-400 justify-center mt-4 gap-2 text-center'>
                 <span>Don{`'`}t have an account? </span>

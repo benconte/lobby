@@ -6,7 +6,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import google_svg from "@/assets/google-svg.png"
 import Link from "next/link"
-import Router,{ useRouter } from "next/router"
+import Router, { useRouter } from "next/router"
 import { useSession } from "next-auth/react"
 
 const loginAnimation = require("@/assets/lottiefiles/secure-login.json")
@@ -27,8 +27,10 @@ function Register() {
   const [error, setError] = useState<string>("")
   const [success, setSuccess] = useState<string>("")
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter()
-  const { status} = useSession()
+  const { status } = useSession()
 
 
   const animateUsername = () => {
@@ -73,8 +75,10 @@ function Register() {
     }
   }
 
-  const handleSubmit:FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
+    setIsLoading(true);
+
     fetch("/api/auth/createuser", {
       method: "POST",
       headers: {
@@ -87,16 +91,19 @@ function Register() {
       .then(res => res.json())
       .then(data => {
         console.log(data)
-        if(data.success) {
+        if (data.success) {
+          setIsLoading(false);
           setError("")
-          setSuccess("Account created sucessfully!")
-          router.push("/")
+          setSuccess("Account created successfully!")
+          router.push("/auth/signin")
         }
         else {
+          setIsLoading(false);
           setError(data.message)
         }
       })
       .catch(err => {
+        setIsLoading(false);
         setError(err)
         throw new Error(err)
       })
@@ -151,11 +158,11 @@ function Register() {
               <div className="w-full flex flex-col justify-start gap-3 mb-2 mt-10">
 
                 {/* messages */}
-                {success.length > 0 && 
+                {success.length > 0 &&
                   <p className={`w-full h-9 rounded border-2 border-solid border-gren-300 bg-green-600 text-white text-base flex items-center justify-center font-medium mb-4`}>{success}</p>
                 }
 
-                {error.length > 0 && 
+                {error.length > 0 &&
                   <p className={`w-full h-9 rounded border-2 border-solid border-red-300 bg-red-500 text-white  text-base flex items-center justify-center font-medium mb-4`}>{error}</p>
                 }
 
@@ -183,15 +190,17 @@ function Register() {
                   </div>
                 </div>
               </div>
-              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>Singup</button>
-              <button type="button" className='mb-4 w-full h-10 text-zinc-500 border border-solid border-gray-300 rounded-md bg-white flex items-center gap-3 justify-center outline-none'>
+              <button type="submit" className='mt-8 mb-4 w-full h-10 text-white rounded-md bg-[#375DC2] hover:bg-[var(--lightblue)] outline-none border-none'>
+                {isLoading ? <div className="w-5 h-5 mx-auto border-2 border-solid border-white border-r-transparent rounded-full animate-spin"></div> : 'Sign up'}
+              </button>
+              {/* <button type="button" className='mb-4 w-full h-10 text-zinc-500 border border-solid border-gray-300 rounded-md bg-white flex items-center gap-3 justify-center outline-none'>
                 <Image src={google_svg} alt="nona" width={20} height={20} />
                 Sign in with google
-              </button>
+              </button> */}
 
               <p className='w-full flex items-center text-sm text-gray-400 justify-center mt-4 gap-2 text-center'>
                 <span>Already have an account? </span>
-                <Link href="signin" className="text-[#375DC2]">Signin</Link>
+                <Link href="signin" className="text-[#375DC2]">Sign in</Link>
               </p>
             </fieldset>
           </div>
