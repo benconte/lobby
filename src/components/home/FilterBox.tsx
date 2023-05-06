@@ -5,6 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import BorderAllRoundedIcon from '@mui/icons-material/BorderAllRounded';
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
+import Link from "next/link"
 
 function FilterBox({ setBusinesses }: { setBusinesses: any }) {
     const [term, setTerm] = useState("")
@@ -37,11 +38,15 @@ function FilterBox({ setBusinesses }: { setBusinesses: any }) {
                 <small className="text-sm text-zinc-400">
                     We provide a variety of the best lodging accomodations for those who need it. Don{"'"}t worry about the quality of the service.
                 </small>
-                <button type="button" className='outline-none bg-[var(--lightblue)] text-white font-medium border-2 border-solid border-transparent hover:border-white rounded p-2'>Discover</button>
+                <button type="button" className='h-9 w-full outline-none bg-[var(--lightblue)] text-white font-medium border-2 border-solid border-transparent hover:border-white rounded'>
+                    <Link href={`/discover`} className="flex w-full h-full items-center justify-center no-underline m-0 p-0">
+                        Discover
+                    </Link>
+                </button>
             </div>
 
             {/* filter section */}
-            <div className='block border-2 border-solid border-gray-300 h-full p-3 rounded overflow-hidden' style={{ flex: 1 }}>
+            <div className='block border-2 border-solid border-gray-300 h-full p-3 rounded' style={{ flex: 1 }}>
                 <header className="flex items-start w-full gap-2 mb-3">
                     <TuneIcon />
                     <h3>Filters</h3>
@@ -66,7 +71,7 @@ function FilterBox({ setBusinesses }: { setBusinesses: any }) {
                         </div>
 
                         {/* filter by section */}
-                        <div className="flex flex-col justify-center gap-1 mt-3 w-auto md:w-40">
+                        <div className="flex flex-col justify-center gap-1 mt-3 w-auto md:w-36 ">
                             <p className="flex items-center gap-1">
                                 <BorderAllRoundedIcon className="text-base text-zinc-600" />
                                 <span className="font-medium text-zinc-600">Type</span>
@@ -90,7 +95,7 @@ function FilterBox({ setBusinesses }: { setBusinesses: any }) {
                         </div>
 
                         {/* change status section */}
-                        <div className="flex flex-col justify-center gap-1 mt-3 w-auto md:w-40">
+                        <div className="flex flex-col justify-center gap-1 mt-3 w-auto md:w-20">
                             <p className="flex items-center gap-1">
                                 <LockOpenRoundedIcon className="text-base text-zinc-600" />
                                 <span className="font-medium text-zinc-600">Status</span>
