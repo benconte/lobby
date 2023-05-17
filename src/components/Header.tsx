@@ -73,7 +73,9 @@ function Header() {
   return (
     <div className="w-full z-20 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-5 lg:px-10">
       <div className="h-full flex items-center gap-3 cursor-pointer">
-        <MenuIcon className="block md:hidden text-2xl text-gray-400 cursor-pointer" onClick={() => setIsLeftNavVisible(!isLeftNavVisible)} />
+        <div className="block md:hidden cursor-pointer" onClick={() => setIsLeftNavVisible(!isLeftNavVisible)}>
+          <MenuIcon className=" text-2xl text-gray-400" />
+        </div>
         <Link href="/" className="no-underline">
           <h3 className='text-xl md:text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
         </Link>
