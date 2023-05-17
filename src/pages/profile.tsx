@@ -98,7 +98,6 @@ function Profile() {
         if (status === "unauthenticated") Router.replace("/auth/signin"); // redirect to sign in not authenticated
 
         if (session && session.user) {
-            console.log(session.user)
             fetch(`/api/getUser/${session?.user?.email}`)
                 .then(res => res.json())
                 .then(data => {

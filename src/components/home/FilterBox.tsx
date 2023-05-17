@@ -12,8 +12,8 @@ function FilterBox({ setBusinesses }: { setBusinesses: any }) {
     const [category, setCategory] = useState("hotels")
     const [isOpen, setIsOpen] = useState(false)
     const [status, setStatus] = useState("open")
-    const [searchTypeDrop, setsearchTypeDrop] = useState(false)
-    const [location, setLocation] = useState("NYC")
+    const [searchTypeDrop, setSearchTypeDrop] = useState(false)
+    const [location, setLocation] = useState("MIAMI")
     const [limit] = useState(35)
 
     const fetchData = async () => {
@@ -36,7 +36,7 @@ function FilterBox({ setBusinesses }: { setBusinesses: any }) {
             <div className='w-full mb-2 md:mb-0 md:w-[300px] flex flex-col gap-2 rounded bg-[#0F172A] h-auto p-3 text-center'>
                 <h3 className="text-xl text-[var(--lightblue)] font-medium">Discover the best hotels & results to stay</h3>
                 <small className="text-sm text-zinc-400">
-                    We provide a variety of the best lodging accomodations for those who need it. Don{"'"}t worry about the quality of the service.
+                    We provide a variety of the best lodging accommodations for those who need it. Don{"'"}t worry about the quality of the service.
                 </small>
                 <button type="button" className='h-9 w-full outline-none bg-[var(--lightblue)] text-white font-medium border-2 border-solid border-transparent hover:border-white rounded'>
                     <Link href={`/discover`} className="flex w-full h-full items-center justify-center no-underline m-0 p-0">
@@ -77,18 +77,18 @@ function FilterBox({ setBusinesses }: { setBusinesses: any }) {
                                 <span className="font-medium text-zinc-600">Type</span>
                             </p>
                             <div className="flex relative">
-                                <div className="flex items-center gap-5 h-10 bg-gray-100 px-3 justify-between rounded-full w-auto md:w-40 cursor-pointer" onClick={() => setsearchTypeDrop(!searchTypeDrop)}>
+                                <div className="flex items-center gap-5 h-10 bg-gray-100 px-3 justify-between rounded-full w-auto md:w-40 cursor-pointer" onClick={() => setSearchTypeDrop(!searchTypeDrop)}>
                                     <span className="font-medium text-zinc-600">{category}</span>
                                     <KeyboardArrowDownIcon className="text-base text-zinc-600" />
                                 </div>
                                 <div className={`${searchTypeDrop ? "flex" : "hidden"} flex-col justify-start gap-2 absolute top-12 rounded w-full bg-white border border-solid border-gray-300`} style={{ zIndex: 5 }}>
                                     <span className='hover:bg-[var(--lightblue)] text-zin-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
                                         setCategory("hotels")
-                                        setsearchTypeDrop(false)
+                                        setSearchTypeDrop(false)
                                     }}>Hotels</span>
                                     <span className='hover:bg-[var(--lightblue)] text-zin-600 hover:text-white flex items-center p-1 cursor-pointer' onClick={() => {
                                         setCategory("restaurants")
-                                        setsearchTypeDrop(false)
+                                        setSearchTypeDrop(false)
                                     }}>Restaurants</span>
                                 </div>
                             </div>

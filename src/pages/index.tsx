@@ -1,26 +1,33 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import FilterBox from '@/components/home/FilterBox'
 import Hotels from '@/components/home/Hotels'
 import Head from 'next/head'
-import { urlParams } from "@/utils/UrlOptions"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import Header from "@/components/Header"
+import Loader from "@/components/Loader"
 
-const birdWaiting = require("@/assets/lottiefiles/blue-bird-waiting.json")
 const loading = require("@/assets/lottiefiles/loading.json")
 
-interface dt {
-  businesses: object;
-  setBusinesses: () => void
-}
+export default function Home() {
+  const [businesses, setBusinesses] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-export default function Home({ data }: {data: any}) {
-  const [businesses, setBusinesses] = useState(data)
+  useEffect(() => {
+    fetch(`/api/home`).then(res => res.json())
+      .then(data => {
+        setBusinesses(data)
+        setIsLoading(false)
+      })
+  }, [])
+
+  if (isLoading) {
+    return <Loader />
+  }
   return (
     <div className="pt-20">
       <Head>
         <title>Lobby - Home</title>
-        <meta name="description" content="A Hotel seaching and booking ap" />
+        <meta name="description" content="A Hotel searching and booking ap" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -47,15 +54,3 @@ export default function Home({ data }: {data: any}) {
     </div>
   )
 }
-
-export const getServerSideProps = async (context: any) => {
-  const request = await fetch("https://api.yelp.com/v3/businesses/search?location=NYC&categories=hotels&open_now=true", urlParams)
-  const data = await request.json()
-  return {
-    props: {
-      data: data.businesses
-    }
-  }
-}
-
-// amenities
