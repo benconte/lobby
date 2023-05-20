@@ -1,25 +1,37 @@
 import Header from "@/components/Header"
 import Head from "next/head"
-import { useContext, useEffect } from "react"
-import { urlParams } from "@/utils/UrlOptions"
+import { useContext, useEffect, useState } from "react"
 import Details from '@/components/booking/details/Details'
-import Payment from '@/components/booking/Payment'
-import Tabs from '@/components/booking/Tabs'
-import Confirmation from '@/components/booking/Confirmation'
+import Loader from "@/components/Loader"
 import BookingContext, { BookContext } from "@/context/BookingContext"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import { useSession } from 'next-auth/react';
-import Router from "next/router"
+import Router, { useRouter } from "next/router"
 
 const loading = require("@/assets/lottiefiles/loading.json")
 
-function Booking({ hotel }: { hotel: any }) {
+function Booking() {
     const { tabIndex } = useContext(BookContext)
     const { status, data: session } = useSession()
+    const router = useRouter();
+    const { id } = router.query; // getting the business id from the url params
+
+    const [hotel, setHotel] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         if (status === "unauthenticated") Router.replace("/auth/signin"); // redirect to sign in not authenticated
-    }, [session, status])
+
+        fetch(`/api/booking/?id=${id}`).then(res => res.json())
+            .then(data => {
+                setHotel(data)
+                setIsLoading(false)
+            })
+    }, [session, status, id])
+
+    if (isLoading) {
+        return <Loader />
+    }
     if (status == "authenticated") {
         return (
             <BookingContext>
@@ -61,16 +73,3 @@ function Booking({ hotel }: { hotel: any }) {
 }
 
 export default Booking
-
-export const getServerSideProps = async (context: any) => {
-    const { params } = context
-    const id = params.id
-
-    const rqst = await fetch(`https://api.yelp.com/v3/businesses/${id}`, urlParams)
-    const data = await rqst.json()
-    return {
-        props: {
-            hotel: data
-        }
-    }
-}

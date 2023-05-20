@@ -19,7 +19,6 @@ function Business() {
   useEffect(() => {
     fetch(`/api/business/?id=${id}`).then(res => res.json())
       .then(data => {
-        console.log(data)
         setBusiness(data)
         setIsLoading(false)
       })
