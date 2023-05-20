@@ -6,7 +6,7 @@ const hotelAmenities = [
     "Restaurant",
     "Bar",
     "Cinema",
-    "Concierge",
+    "TV",
     "Parking"
 ];
 
