@@ -1,4 +1,5 @@
 import React from 'react'
+import { generateRandomPrice } from "@/utils/priceGenerator"
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import Link from "next/link"
 
@@ -28,7 +29,7 @@ function BusinessData({ business }: { business: any }) {
             </p>
 
             <p className="text-base text-zinc-600 mt-2">
-                <b>Cost:</b> $256
+                <b>Cost:</b> ${generateRandomPrice()}
             </p>
             <div className="flex-1 flex items-center justify-between gap-2 mt-1">
                 <div className="flex items-center gap-2">

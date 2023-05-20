@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext } from 'react'
 import Router, { useRouter } from "next/router"
 import { SnackbarOrigin } from '@mui/material/Snackbar';
+import { generateRandomPrice } from "@/utils/priceGenerator"
 import validator from 'validator';
 
 export const BookContext = createContext<any>({})
@@ -26,7 +27,7 @@ function BookingContext({ children }: { children: any }) {
   const [country, setCountry] = useState<any>()
   const [checkInDate, setCheckInDate] = useState<any>()
   const [checkOutDate, setCheckOutDate] = useState<Date>()
-  const [price, setPrice] = useState<any>(250)
+  const [price, setPrice] = useState<any>(generateRandomPrice())
   const [error, setError] = useState<string>("")
   const [tabIndex, setTabIndex] = useState(1)
   const [success, setSuccess] = useState<any>()

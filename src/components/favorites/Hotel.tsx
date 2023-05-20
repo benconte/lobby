@@ -2,6 +2,7 @@ import React from 'react'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import Link from 'next/link';
 import Image from 'next/image';
+import { generateRandomPrice } from "@/utils/priceGenerator"
 
 function Hotel({ hotel }: any) {
     return (
@@ -34,7 +35,7 @@ function Hotel({ hotel }: any) {
                         <span className={`${hotel.is_closed ? "bg-red-600" : "bg-green-600"} rounded-full px-3 text-sm py-1 text-white`}>
                             {hotel.is_closed ? "Closed" : "Open"}
                         </span>
-                        <span className="text-sm text-zinc-600">$66.4</span>
+                        <span className="text-sm text-zinc-600">${generateRandomPrice()}</span>
                     </div>
                 </div>
             </Link>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { getRandomRooms } from "@/utils/randomRoomCategory"
 import { getRandomAmenities } from "@/utils/hotelAmenities"
+import { generateRandomPrice } from "@/utils/priceGenerator"
 
 type RoomCategory = "single" | "double" | "family" | string;
 
@@ -108,7 +109,7 @@ function Hotels({ business }: { business: any }) {
                                 </span>
                             </div>
                         }
-                        <span className="text-sm text-zinc-600"><b>$256</b> /Night</span>
+                        <span className="text-sm text-zinc-600"><b>${generateRandomPrice()}</b> /Night</span>
                     </div>
 
                 </div>
