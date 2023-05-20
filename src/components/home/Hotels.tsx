@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { generateRandomPrice } from "@/utils/priceGenerator"
 
 function Hotels({ business }: { business: any }) {
     const [isFavorite, setIsFavorite] = useState<boolean>(false)
@@ -90,7 +91,7 @@ function Hotels({ business }: { business: any }) {
                         <span className={`${business.is_closed ? "bg-red-600" : "bg-green-600"} rounded-full px-3 text-sm py-1 text-white`}>
                             {business.is_closed ? "Closed" : "Open"}
                         </span>
-                        <span className="text-sm text-zinc-600">$66.4</span>
+                        <span className="text-sm text-zinc-600">${generateRandomPrice()}</span>
                     </div>
                 </div>
             </Link>

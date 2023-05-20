@@ -70,6 +70,8 @@ function Header() {
 
     if (router.pathname !== "/") setisSearchVisible(true)
   }, [router.pathname, status, session])
+
+
   return (
     <div className="w-full z-20 bg-white h-20 fixed top-0 left-0 border-b flex items-center justify-between px-5 lg:px-10">
       <div className="h-full flex items-center gap-3 cursor-pointer">
@@ -93,10 +95,6 @@ function Header() {
 
         {isLeftNavVisible &&
           <div className="fixed top-16 left-0 h-auto px-5 rounded-b-lg  w-full block bg-white border-b-2 border-solid border-[#f7f7f7] py-3 z-40 md:hidden">
-            {/* <Link href="/" className="no-underline mb-5 flex items-center justify-between">
-              <h3 className='text-xl md:text-3xl font-bold text-[var(--lightblue)] font-dancingScript'>Lobby</h3>
-              <CloseIcon className="text-2xl text-gray-400 cursor-pointer" onClick={() => setIsLeftNavVisible(false)} />
-            </Link> */}
             <ul className='flex flex-col justify-center gap-3 m-0 list-none'>
               <Link href="/discover" className="no-underline">
                 <li className='text-gray-400 text-sm md:text-base cursor-pointer hover:text-zinc-600'>Discover</li>
@@ -152,7 +150,7 @@ function Header() {
         </Link>
         {isAuthenticated ?
           <div className='relative'>
-            <Image src={authUser.profile ? authUser.profile : profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} />
+            <Image src={authUser.profile ? authUser.profile : profile} alt="Profile" className="rounded-full cursor-pointer" width={40} height={40} onClick={() => setProfileDropdown(!profileDropdown)} placeholder="blur" blurDataURL="/images/avatar.png" />
             {/* dropdown */}
             <div className={`bg-white border border-solid border-gray-300 w-40 ${profileDropdown ? "flex top-12" : "hidden top-16"} flex-col gap-3 justify-start rounded absolute  right-0`}>
               <Link href="/profile" className="no-underline">
