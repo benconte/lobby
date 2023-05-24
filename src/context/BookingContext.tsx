@@ -61,7 +61,6 @@ function BookingContext({ children }: { children: any }) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         if (data.success) {
           setError("")
           setSuccess("Hotel booked sucessfully!")

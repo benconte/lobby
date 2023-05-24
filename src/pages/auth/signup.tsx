@@ -90,7 +90,6 @@ function Register() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         if (data.success) {
           setIsLoading(false);
           setError("")

@@ -43,12 +43,10 @@ function Header() {
     if (!req.ok) return
     const res = await req.json()
     setSearchResult(res.data.businesses)
-    console.log(res)
   }
 
   const handleClickAway = () => {
     setIsSearchOpen(false)
-    console.log("clicked away")
   };
 
   useEffect(() => {
@@ -56,7 +54,6 @@ function Header() {
       setIsAuthenticated(true)
 
       if (session && session.user) {
-        console.log(session.user)
         fetch(`/api/getUser/${session?.user?.email}`)
           .then(res => res.json())
           .then(data => {

@@ -5,9 +5,7 @@ import Router from "next/router"
 
 const Protected: NextPage = (): JSX.Element => {
     const { status, data: session } = useSession()
-
-    console.log(status, session)
-
+    
     useEffect(() => {
         if (status === "unauthenticated") Router.replace("/auth/signin");
     }, [status])

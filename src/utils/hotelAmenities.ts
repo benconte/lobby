@@ -23,5 +23,3 @@ export function getRandomAmenities() {
 
     return randomAmenities;
 }
-
-console.log(getRandomAmenities());

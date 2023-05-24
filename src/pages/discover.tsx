@@ -11,7 +11,6 @@ export default function Home() {
   useEffect(() => {
     fetch(`/api/discover`).then(res => res.json())
       .then(data => {
-        console.log(data)
         setBusinesses(data)
         setIsLoading(false)
       })

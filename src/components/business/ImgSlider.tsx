@@ -9,7 +9,6 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 function ImgSlider({ images, business }: { images: any; business: any }) {
   const [isFavorite, setIsFavorite] = useState<boolean>(false)
-
   let settings: object = {
     dots: false,
     infinite: true,
@@ -72,7 +71,7 @@ function ImgSlider({ images, business }: { images: any; business: any }) {
         }
       </div>
       <Slider {...settings} className="w-full custom-buttons">
-        {images.map((img: any, index: number) => (
+        {images && images.map((img: any, index: number) => (
           <div key={index} className="relative w-full h-64 md:h-96 rounded-lg object-cover overflow-hidden">
             <Image src={img} alt="some radom img" fill={true} loading="eager" className="object-cover" />
           </div>

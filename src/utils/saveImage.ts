@@ -12,7 +12,7 @@ export async function saveImageToDatabase(userId: string, image: string) {
         { _id: new ObjectId(userId) },
         { $set: { profile: image } }
       );
-      console.log(`Profile image saved to database for user with ID ${userId}!`);
+      
     } catch (err) {
       console.error(err);
     } finally {

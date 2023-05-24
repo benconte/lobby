@@ -10,9 +10,11 @@ function BusinessData({ business }: { business: any }) {
                 <div className="flex flex-col justify-start gap-1 w-auto">
                     <h3 className="text-2xl font-bold text-[var(--dark)] truncate">{business.name}</h3>
                     <div className="flex items-center flex-wrap gap-2">
-                        {business.categories.map((cat: any, index: number) => (
+                        {business.categories ? business.categories.map((cat: any, index: number) => (
                             <span className="text-sm py-1 px-2 rounded flex items-center justify-center text-zinc-600 bg-gray-200" key={index}>{cat.title}</span>
-                        ))}
+                        )): (
+                            <span className="text-sm py-1 px-2 rounded flex items-center justify-center text-zinc-600 bg-gray-200">Hotels</span>
+                        )}
                     </div>
                 </div>
                 <p className="flex items-center gap-1">
@@ -23,7 +25,7 @@ function BusinessData({ business }: { business: any }) {
             <p className="text-base text-zinc-600 mt-2"><b>Call us:</b> {business.phone}</p>
             <p className="text-base text-zinc-600 mb-1"><b>Review Count:</b> {business.review_count}</p>
             <p className="text-sm text-gray-400 sm:line-clamp-5 lg:line-clamp-none">
-                {business.reviews_data.reviews.map((review: any, index: any) => (
+                {business.reviews_data && business.reviews_data.reviews && business.reviews_data.reviews.map((review: any, index: any) => (
                     <span key={index}>{review.text}</span>
                 ))}
             </p>

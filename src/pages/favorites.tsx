@@ -26,7 +26,6 @@ function Favorites() {
           "Content-Type": "application/json",
         },
       }).then(res => res.json()).then((data: any) => {
-        console.log(data)
         setIsLoading(false)
         setHotels(data)
       })

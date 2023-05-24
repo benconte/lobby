@@ -45,7 +45,9 @@ function Business() {
         </div>
         <Amenities />
         <div className={`w-full grid grid-flow-row-dense grid-cols-1 ${business.hours && "md:grid-cols-2"} gap-4`}>
-          <Map coordinates={business.coordinates} />
+          {business.coordinates &&
+            <Map coordinates={business.coordinates} />
+          }
           {business.hours &&
             <Time hours={business.hours} />
           }

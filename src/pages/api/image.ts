@@ -12,8 +12,6 @@ export default async function updateProfile(req: NextApiRequest, res: NextApiRes
         const database = client.db(process.env.DB_NAME);
         const collection = database.collection('images');
         const result = await collection.insertOne({ profile: image });
-        console.log('Image saved to database!');
-
 
         // Return a success response
         res.status(200).json({ success: true });

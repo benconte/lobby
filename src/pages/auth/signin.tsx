@@ -64,7 +64,7 @@ function Login() {
       password: password,
       redirect: false
     })
-    console.log(res)
+    
     if (res?.ok) {
       // redirect if user was authenticated
       setIsLoading(false);

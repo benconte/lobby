@@ -72,7 +72,7 @@ function Profile() {
                 oldPassword,
                 newPassword
             });
-            console.log(data.success)
+            
             // Reset the form and display a success message
             setImage(null);
             setFileName("")

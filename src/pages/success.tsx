@@ -27,7 +27,7 @@ function success() {
                 </Player>
                 <div className='flex flex-col items-center justify-center gap-1'>
                     <h2 className="text-lg text-[var(--dark-blue)] font-medium">Hotel booked successfully.</h2>
-                    <span className='text-gray-400 text-sm'>Welcome to lobby</span>
+                    <span className='text-gray-400 text-sm'>You will receive an email from the hotel you booked!</span>
                     <Link href="/" className='text-[var(--blue)] text-sm underline'>Back to home page</Link>
                 </div>
             </div>
